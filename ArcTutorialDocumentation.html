@@ -4,15 +4,34 @@
 <script src="highlight.min.js"></script>
 <script src="csi.min.js"></script>
 <script>
-            function doOnLoad(){function a(a,b){var c=/^(?:file):/,d=new XMLHttpRequest,e=0;d.onreadystatechange=function(){4==d.readyState&&(e=d.status),c.test(location.href)&&d.responseText&&(e=200),4==d.readyState&&200==e&&(a.outerHTML=d.responseText)};try{d.open("GET",b,!0),d.send()}catch(f){}}var b,c=document.getElementsByTagName("*");for(b in c)c[b].hasAttribute&&c[b].hasAttribute("data-include")&&a(c[b],c[b].getAttribute("data-include"))};
-
-            hljs.highlightAll()
+            function doOnLoad()
+            {
+                        function a(a,b)
+                        {
+                                    var c=/^(?:file):/,
+                            d=new XMLHttpRequest,
+                            e=0;
+                         d.onreadystatechange=function()
+                         {
+                                     4==d.readyState&&(e=d.status),
+                                     c.test(location.href)&&d.responseText&&(e=200),
+                                     4==d.readyState&&200==e&&(a.outerHTML=d.responseText),
+                                     hljs.highlightElement(a);
+                         };
+                         try{
+                                     d.open("GET",b,!0),
+                                                 d.send()}
+                         catch(f){}}var b,
+                             c=document.getElementsByTagName("*");
+                        for(b in c)
+                                    c[b].hasAttribute&&c[b].hasAttribute("data-include")&&a(c[b],c[b].getAttribute("data-include"))
+            };
 </script>
 </head>
 <body onload="doOnLoad()">
 <link rel="stylesheet"
       href="styles/agate.min.css">
-      <h5>hi2...</h5>
+      <h5>hi4...</h5>
 <div id="pageGame">
 <div data-include="docs/classGame.html"></div>
 </div>
