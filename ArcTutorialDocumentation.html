@@ -15,12 +15,8 @@
                          {
                                      4==d.readyState&&(e=d.status),
                                      c.test(location.href)&&d.responseText&&(e=200),
-                                     4==d.readyState&&200==e&&(a.outerHTML=d.responseText);
-                                     var days = a.children;
-        for (i = 0; i <= days.length - 1; i++) {
-            if (days[i].className.includes("language-")
-                hljs.highlightElement(days[i]);
-        }
+                                     4==d.readyState&&200==e&&(a.outerHTML=d.responseText),
+                                                 highlight(a)
                          };
                          try{
                                      d.open("GET",b,!0),
@@ -30,12 +26,20 @@
                         for(b in c)
                                     c[b].hasAttribute&&c[b].hasAttribute("data-include")&&a(c[b],c[b].getAttribute("data-include"))
             };
+            
+            function highlight(a){
+                     var days = a.children;
+        for (i = 0; i <= days.length - 1; i++) {
+            if (days[i].className.includes("language-")
+                hljs.highlightElement(days[i]);
+        }   
+            };
 </script>
 </head>
 <body onload="doOnLoad()">
 <link rel="stylesheet"
       href="styles/agate.min.css">
-      <h5>hi5...</h5>
+      <h5>hi6...</h5>
 <div id="pageGame">
 <div data-include="docs/classGame.html"></div>
 </div>
