@@ -32,6 +32,9 @@
                      var days = a.children;
         for (i = 0; i <= days.length - 1; i++) {
                     console.log("Class: "  + days[i].className);
+                    var baby = days[i].childern;
+                                for(e = 0;e< baby.length;++e)
+                                            highlight(baby[e]);
             if (days[i].className.includes("language-"))
                 hljs.highlightElement(days[i]);
         }   
@@ -41,7 +44,7 @@
 <body onload="doOnLoad()">
 <link rel="stylesheet"
       href="styles/agate.min.css">
-      <h5>hi9...</h5>
+      <h5>hi10...</h5>
 <div id="pageGame">
 <div data-include="docs/classGame.html"></div>
 </div>
