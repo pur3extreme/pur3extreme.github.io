@@ -15,7 +15,7 @@
                          {
                                      4==d.readyState&&(e=d.status),
                                      c.test(location.href)&&d.responseText&&(e=200),
-                                     4==d.readyState&&200==e&&(a.outerHTML=d.responseText),
+                                     4==d.readyState&&200==e&&(a.innerHTML=d.responseText),
                                                  highlight(a)
                          };
                          try{
