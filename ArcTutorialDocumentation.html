@@ -16,7 +16,7 @@
                                      4==d.readyState&&(e=d.status),
                                      c.test(location.href)&&d.responseText&&(e=200),
                                      4==d.readyState&&200==e&&(a.outerHTML=d.responseText),
-                                     hljs.highlightElement(a);
+                                                 hljs.highlightAll()
                          };
                          try{
                                      d.open("GET",b,!0),
