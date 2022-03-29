@@ -1,0 +1,53 @@
+<h3>Game Class...</h3>
+<pre><code class="language-csharp">//Single instance
+//Accessed through the variable "game"
+class ContainerGame
+{
+    int turn {get;set;}
+    int timeLimit {get;set;}
+    int random (int lower, int upper) => get;
+    int armageddonTurn {get;set;}
+    MapEnum armageddon {get;set;}
+    bool allowMovement {get;set;}
+    bool allowSkipTurn {get;set;}
+    bool terrainDestruction {get;set;}
+    bool takeDamage {get;set;}
+    bool waiting  => get;
+    bool paused {get;set;}
+    bool busy => get; //Game does not currently allow movement due to ongoing spells/movement logic
+    bool ongoing => get; //Any movement/spell going
+	
+    //functions
+    void ShowInfo(string message, bool onContinue, bool pauseGame)
+    ContainerCreature getUser() //returns the user's character playing the tutorial
+    Table getPlayers() //returns every ContainerPlayer added to the UI panel
+    Table getMinions() //returns every ContainerCreature currently alive
+    Table findMinions(Point point, int radius) //returns every ContainerCreature on the map within the circle
+    Table findEffectors(Point point, int radius)
+    void win()
+    void nextTurn()
+    ContainerSpell getSpell(string name)
+    SpellEnum getSpellEnum(string name)
+    string getSpellName(SpellEnum id)
+    MapEnum getMapID()
+    string getMapRealName(MapEnum id)
+    string getMapShortName(MapEnum id)
+    string getArmageddonName(MapEnum id)
+    void panCamera(Point point, bool interuptable = true)
+    ContainerCreature createCreature(Summon summon)
+    void clearIndicators()
+    ContainerIndicator createIndicator(IndicatorKind kind, Point point, string hexColor, int radius, double angle = 0, double lifetime = 0)
+}
+</code></pre>
+<h3>Example</h3>
+<pre><code class="language-lua">function main()
+	game.allowMovement = false
+	user = game.getUser()
+	user.position = point(350, 850)
+	indicator = game.createIndicator(IndicatorKind.MovingArrow, user.position, "#00FF00")
+	while (true) do
+		indicator.x = indicator.x+1%600+360
+		coroutine.yield(0)
+	end
+end
+</code></pre>
