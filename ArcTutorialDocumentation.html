@@ -16,7 +16,7 @@
                                      4==d.readyState&&(e=d.status),
                                      c.test(location.href)&&d.responseText&&(e=200),
                                      4==d.readyState&&200==e&&(a.innerHTML=d.responseText),
-                                                 highlight(a)
+                                     hljs.highlightAll()
                          };
                          try{
                                      d.open("GET",b,!0),
@@ -28,7 +28,6 @@
             };
             
             function highlight(a){
-                        hljs.highlightAll();
                         console.log("highlight");
                      var days = a.children;
         for (i = 0; i <= days.length - 1; i++) {
@@ -46,7 +45,7 @@
 <body onload="doOnLoad()">
 <link rel="stylesheet"
       href="styles/agate.min.css">
-      <h5>hi12...</h5>
+      <h5>hi13...</h5>
 <div id="pageGame">
 <div data-include="docs/classGame.html"></div>
 </div>
