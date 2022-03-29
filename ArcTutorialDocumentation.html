@@ -15,8 +15,12 @@
                          {
                                      4==d.readyState&&(e=d.status),
                                      c.test(location.href)&&d.responseText&&(e=200),
-                                     4==d.readyState&&200==e&&(a.outerHTML=d.responseText),
-                                                 hljs.highlightAll()
+                                     4==d.readyState&&200==e&&(a.outerHTML=d.responseText);
+                                     var days = a.children;
+        for (i = 0; i <= days.length - 1; i++) {
+            if (days[i].className.includes("language-")
+                hljs.highlightElement(days[i]);
+        }
                          };
                          try{
                                      d.open("GET",b,!0),
