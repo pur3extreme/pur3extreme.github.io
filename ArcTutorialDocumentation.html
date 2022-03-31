@@ -1,58 +1,156 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="jquery-3.6.0.min.js"></script>
             <style> 
                         code {
 	                        tab-size:4
                         }
             </style>
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+.navbar a:hover {
+  background-color: red;
+}
+
+.link{
+	color:#00FF7D;
+}
+.link:hover{
+	text-decoration: underline;
+	color:#00BB7D;
+	cursor: pointer;
+}
+
+body {
+  overflow: scroll; /* Show scrollbars */
+}
+</style>
 <script src="highlight.min.js"></script>
 <script src="csi.min.js"></script>
 <script>
-            function doOnLoad()
-            {
-                        function a(a,b)
-                        {
-                                    var c=/^(?:file):/,
-                            d=new XMLHttpRequest,
-                            e=0;
-                         d.onreadystatechange=function()
-                         {
-                                     4==d.readyState&&(e=d.status),
-                                     c.test(location.href)&&d.responseText&&(e=200),
-                                     4==d.readyState&&200==e&&(a.innerHTML=d.responseText),
-                                     hljs.highlightAll()
-                         };
-                         try{
-                                     d.open("GET",b,!0),
-                                                 d.send()}
-                         catch(f){}}var b,
-                             c=document.getElementsByTagName("*");
-                        for(b in c)
-                                    c[b].hasAttribute&&c[b].hasAttribute("data-include")&&a(c[b],c[b].getAttribute("data-include"))
-            };
-            
-            function highlight(a){
-                        console.log("highlight");
-                     var days = a.children;
-        for (i = 0; i <= days.length - 1; i++) {
-                    console.log("Class: "  + days[i].className + " type: " + (typeof a));
-                    var baby = days[i].childern;
-                    if(typeof baby !== 'undefined')
-                                for(e = 0;e< baby.length;++e)
-                                            highlight(baby[e]);
-            if (days[i].className.includes("language-"))
-                hljs.highlightElement(days[i]);
-        }   
-            };
+window.onhashchange = function() {
+    if (window.innerDocClick) {
+        //Your own in-page mechanism triggered the hash change
+    } else {
+        //Browser back button was clicked
+		myLoad();
+    }
+}
+	var currentPage = "";
+	
+	function load(n, hash)
+	{
+		if(typeof hash !== 'undefined')
+		window.location.hash = hash;
+	if(currentPage == n)
+		return;
+		currentPage = n;
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+    			if (this.readyState == 4 && this.status == 200) {
+       				document.getElementById("pageGame").innerHTML = xhttp.responseText;
+                                     hljs.highlightAll();
+									 let c = document.getElementById("pageGame").getElementsByTagName("*");
+									 for(b in c){
+									 if(typeof c[b] !== 'undefined' && typeof c[b].innerHTML !== 'undefined' && c[b].tagName != "H3"){
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bContainerGame\b/g, '<span class="link" onclick="load(&quot;docs/classGame.html&quot;, &quot;#game&quot;)">' + 'ContainerGame' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bContainerCreature\b/g, '<span class="link" onclick="load(&quot;docs/classCreature.html&quot;, &quot;#creature&quot;)">' + 'ContainerCreature' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bContainerPlayer\b/g, '<span class="link" onclick="load(&quot;docs/classPlayer.html&quot;, &quot;#player&quot;)">' + 'ContainerPlayer' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bContainerEffector\b/g, '<span class="link" onclick="load(&quot;docs/classEffector.html&quot;, &quot;#effector&quot;)">' + 'ContainerEffector' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bContainerIndicator\b/g, '<span class="link" onclick="load(&quot;docs/classIndicator.html&quot;, &quot;#indicator&quot;)">' + 'ContainerIndicator' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bContainerSpell\b/g, '<span class="link" onclick="load(&quot;docs/classSpell.html&quot;, &quot;#spell&quot;)">' + 'ContainerSpell' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bPoint\b/g, '<span class="link" onclick="load(&quot;docs/classPoint.html&quot;, &quot;#point&quot;)">' + 'Point' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bSummon\b/g, '<span class="link" onclick="load(&quot;docs/classSummon.html&quot;, &quot;#summon&quot;)">' + 'Summon' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bContainerTower\b/g, '<span class="link" onclick="load(&quot;docs/classTower.html&quot;, &quot;#tower&quot;)">' + 'ContainerTower' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bUIElement\b/g, '<span class="link" onclick="load(&quot;docs/classUIElement.html&quot;, &quot;#uielement&quot;)">' + 'UIElement' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bKeyCode\b/g, '<span class="link" onclick="load(&quot;docs/enumKeyCode.html&quot;, &quot;#keycode&quot;)">' + 'KeyCode' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bSpellEnum\b/g, '<span class="link" onclick="load(&quot;docs/enumSpellEnum.html&quot;, &quot;#spellenum&quot;)">' + 'SpellEnum' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bCastType\b/g, '<span class="link" onclick="load(&quot;docs/enumCastType.html&quot;, &quot;#casttype&quot;)">' + 'CastType' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bDamageType\b/g, '<span class="link" onclick="load(&quot;docs/enumDamageType.html&quot;, &quot;#damagetype&quot;)">' + 'DamageType' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bBook\b/g, '<span class="link" onclick="load(&quot;docs/enumBook.html&quot;, &quot;#book&quot;)">' + 'Book' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bAnchor\b/g, '<span class="link" onclick="load(&quot;docs/enumAnchor.html&quot;, &quot;#anchor&quot;)">' + 'Anchor' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bAlignHorizontal\b/g, '<span class="link" onclick="load(&quot;docs/enumAlignHorizontal.html&quot;, &quot;#alignh&quot;)">' + 'AlignHorizontal' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bAlignVertical\b/g, '<span class="link" onclick="load(&quot;docs/enumAlignVertical.html&quot;, &quot;#alignv&quot;)">' + 'AlignVertical' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bIndicatorKind\b/g, '<span class="link" onclick="load(&quot;docs/enumIndicatorKind.html&quot;, &quot;#indicatorkind&quot;)">' + 'IndicatorKind' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bMapEnum\b/g, '<span class="link" onclick="load(&quot;docs/enumMapEnum.html&quot;, &quot;#mapenum&quot;)">' + 'MapEnum' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bEffectorType\b/g, '<span class="link" onclick="load(&quot;docs/enumEffectorType.html&quot;, &quot;#effectortype&quot;)">' + 'EffectorType' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bTowerType\b/g, '<span class="link" onclick="load(&quot;docs/enumTowerType.html&quot;, &quot;#towertype&quot;)">' + 'TowerType' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bCreatureType\b/g, '<span class="link" onclick="load(&quot;docs/enumCreatureType.html&quot;, &quot;#creaturetype&quot;)">' + 'CreatureType' + '</span>');
+									 c[b].innerHTML = c[b].innerHTML.replace(/\bCreatureRace\b/g, '<span class="link" onclick="load(&quot;docs/enumCreatureRace.html&quot;, &quot;#creaturerace&quot;)">' + 'CreatureRace' + '</span>');
+									 }}
+    			}
+		};
+		xhttp.open("GET", n, true);
+		xhttp.send();
+	}
+	
+	function myLoad()
+	{
+		let queryString = window.location.hash;
+		let result = queryString.lastIndexOf("#");
+		if(result >= 0)
+		{
+			let last = queryString.substr(result);
+			let con = document.getElementById("nav")
+			const nodeList = con.childNodes;
+			for (let i = 0; i < nodeList.length; i++) 
+			{
+				if(typeof nodeList[i].href !== 'undefined' && nodeList[i].href.indexOf(last) >= 0)
+				{
+					nodeList[i].onclick.apply(nodeList[i]);
+					return;
+				}
+			}
+		}
+		load('docs/home.html')
+	}
 </script>
 </head>
-<body onload="doOnLoad()">
+<body onload="myLoad()">
+<div class="navbar" id="nav">
+  <a href="#home" onclick="load('docs/home.html')">Home</a>
+  <a href="#game" onclick="load('docs/classGame.html')">Game</a>
+  <a href="#creature" onclick="load('docs/classCreature.html')">Creature</a>
+  <a href="#effector" onclick="load('docs/classEffector.html')">Effector</a>
+  <a href="#indicator" onclick="load('docs/classIndicator.html')">Indicator</a>
+  <a href="#player" onclick="load('docs/classPlayer.html')">Player</a>
+  <a href="#point" onclick="load('docs/classPoint.html')">Point</a>
+  <a href="#spell" onclick="load('docs/classSpell.html')">Spell</a>
+  <a href="#summon" onclick="load('docs/classSummon.html')">Summon</a>
+  <a href="#tower" onclick="load('docs/classTower.html')">Tower</a>
+  <a href="#uielement" onclick="load('docs/classUIElement.html')">UIElement</a>
+  <a href="#alignh" onclick="load('docs/enumAlignHorizontal.html')">Align H</a>
+  <a href="#alignv" onclick="load('docs/enumAlignVertical.html')">Align V</a>
+  <a href="#anchor" onclick="load('docs/enumAnchor.html')">Anchor</a>
+  <a href="#book" onclick="load('docs/enumBook.html')">Book</a>
+  <a href="#casttype" onclick="load('docs/enumCastType.html')">CastType</a>
+  <a href="#damagetype" onclick="load('docs/enumDamageType.html')">DamageType</a>
+  <a href="#effectortype" onclick="load('docs/enumEffectorType.html')">EffectorType</a>
+  <a href="#fontstyle" onclick="load('docs/enumFontStyles.html')">FonstStyle</a>
+  <a href="#indicatorkind" onclick="load('docs/enumIndicatorKind.html')">IndicatorKind</a>
+  <a href="#keycode" onclick="load('docs/enumKeyCode.html')">KeyCode</a>
+  <a href="#mapenum" onclick="load('docs/enumMapEnum.html')">MapEnum</a>
+  <a href="#spellenum" onclick="load('docs/enumSpellEnum.html')">SpellEnum</a>
+  <a href="#creaturetype" onclick="load('docs/enumCreatureType.html')">CreatureType</a>
+  <a href="#creaturerace" onclick="load('docs/enumCreatureRace.html')">CreatureRace</a>
+  <a href="#towertype" onclick="load('docs/enumTowerType.html')">TowerType</a>
+</div>
 <link rel="stylesheet"
       href="styles/agate.min.css">
-      <h5>hi13...</h5>
-<div id="pageGame">
-<div data-include="docs/classGame.html"></div>
-</div>
+<div id="pageGame" data-include="docs/classGame.html"></div>
 </body>
 </html>
