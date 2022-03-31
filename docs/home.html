@@ -1,0 +1,72 @@
+<h3>Arcanists 2 Documentation</h3>
+<p>
+Tutorial Creator <br>
+<a href="https://www.lua.org/docs.html" onclick="load('docs/home.html')">Lua documentation</a>
+<br>
+<a href="https://www.moonsharp.org/debugger.html" onclick="load('docs/home.html')">Debugger Intergration (Visual Studio Code)</a>
+</p>
+<pre><code class="language-lua">--Global variables
+game => ContainerGame 
+point(int x, int y) => Point 
+createUI() => UIElement
+summon() => Summon --container to call game.createCreature(summon)
+spell(object spellObj) => --returns ContainerSpell .. spellObj = One of: Spell Name/SpellEnum/Other Spell
+
+--Registrable callbacks
+onKeyDown(KeyCode)
+onKeyHeld(KeyCode)
+onDeath(ContainerCreature)
+onSpellCast(ContainerCreature, ContainerSpell)
+
+--Containers (Cannot be created directly)
+ContainerGame
+ContainerCreature
+ContainerPlayer
+ContainerEffector
+ContainerIndicator
+ContainerSpell
+UIElement
+
+--Classes
+Summon 
+Point
+
+--Enums
+KeyCode
+MapEnum
+SpellEnum
+CastType
+DamageType
+Book
+Anchor
+AlignHorizontal
+AlignVertical
+IndicatorKind
+EffectorType
+TowerType
+FontStyles
+</code></pre>
+<h3>Example</h3>
+<pre><code class="language-lua">function main()
+	game.ShowInfo("Welcome to this example tutorial - Change your radius with the 1 and 2 keys", false, false)
+	user = game.getUser()
+	user.radius = 60
+	while true do
+		--coroutine must be active to keep callbacks alive
+		coroutine.yield(0)
+	end
+end
+
+--Changes the player size on key press
+function onKeyHeld(key)
+	if(key == KeyCode.Alpha1) then
+		game.getUser().radius = game.getUser().radius-1;
+		game.showInfo(tostring(game.getUser().radius))
+	end
+	
+	if(key == KeyCode.Alpha2) then
+		game.getUser().radius = game.getUser().radius+1;
+		game.showInfo(tostring(game.getUser().radius))
+	end
+end
+</code></pre>
