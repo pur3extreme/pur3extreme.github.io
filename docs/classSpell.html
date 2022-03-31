@@ -1,0 +1,36 @@
+<h3>Spell Class</h3>
+<pre><code class="language-csharp">
+class ContainerSpell
+{
+	int uses {get;set;}
+	int maxUses {get;set;}
+	int rechargeTime {get;set;}
+	int lastTurnFired {get;set;}
+	bool isPresent {get;set;}
+	bool locked {get;set;}
+
+	SpellEnum spellEnum => get;
+	CastType castType => get;
+	DamageType damageType => get;
+	BookOf book => get;
+	int damage => get;
+	int explosionRadius => get;
+	string description => get;
+	string name => get;
+}
+</code></pre>
+<h3>Example</h3>
+<pre><code class="language-lua">function main()
+	user = game.getUser()
+	user.addSpell("Sphere of Healing")
+	s = spell("Fire Ball")
+	z = spell(SpellEnum.Frost_Shards)
+	t = spell(0, game.getUser())
+	
+	z.isPresent = true
+	user.addSpell(s)
+	user.addSpell(z)
+	
+	game.showInfo("Spells: " .. s.name .. ", " .. z.name .. ", " .. t.name)
+end
+</code></pre>

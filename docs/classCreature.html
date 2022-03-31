@@ -1,0 +1,107 @@
+<h3>Creature Class</h3>
+<pre><code class="language-csharp">
+class ContainerCreature
+{
+	int team => get;
+	string name => get;
+	SpellEnum spellEnum => get;
+	int healthAndTower => get; //health + tower health
+	int health {get;set;}
+	int maxHealth {get;set;}
+	int shield {get;set;}
+	int x {get;set;}
+	int y {get;set;}
+	Point position {get;set;}
+	ContainerPlayer parent {get;set;}
+	int weight {get;set;} //0-100
+	int radius {get;set;} //1-200
+	bool stunned {get;set;}
+	bool superStunned {get;set;}
+	bool waterWalking {get;set;}
+	bool frostWalking {get;set;}
+	CreatureType type => get;
+	CreatureRace race => get;
+	bool yourTurn => get;
+	bool inTower => get;
+	bool isMoving => get;
+	bool isRider => get;
+	bool isMounted => get;
+	bool isDead => get;
+	bool isPawn => get;
+	bool isFlying => get;
+	bool isMountable => get;
+	bool canMount => get;
+	
+	//Functions
+	ContainerCreature getRider();
+	ContainerCreature getMount();
+	ContainerTower getTower();
+
+	void LongJump(int dir) //-1 = left, 1 = right, 0 = current
+	void HighJump(int dir)
+	void Walk(int dir)
+	void setDirection(int dir)
+
+	void Die()
+	int getFamiliarLevel(Book book)
+	int getActivateableFamiliarLevel()
+	Book getActivateableFamiliarBookID()
+	void increaseFamiliarLevel(int bookID = -1, bool dealDmg = true, bool capAt5 = true)
+	ContainerSpell addSpell(object spellObj) //spellObj = One of: Spell Name/SpellEnum/Other Spell
+	void removeSpell(object spellObj) //spellObj = One of: Spell Name/SpellEnum/Other Spell/index
+	void removeSpell(ContainerSpell spell) //removes this exact spell
+	Table getSpells()//returns a 1 based index of the creatures spells
+	int getSpellCount()
+	int castedCount(SpellEnum spellID)
+	int castedCountThisTurn()
+	int castedDamage(SpellEnum spellID)
+	int getMinionCount()
+	void castSpell(object spellObj, Point target, double angle, double power = 1, bool setGameBusy = true) //spellObj = One of: Spell Name/SpellEnum/Other Spell/index
+	void fireAt(object spellObj, ContainerCreature target, double anglevariance = 0, bool setGameBusy = true) //spellObj = One of: Spell Name/SpellEnum/Other Spell/index
+	void fireAt(object spellObj, Point target, double anglevariance = 0, bool setGameBusy = true) //spellObj = One of: Spell Name/SpellEnum/Other Spell/index
+	Table getEffectors() //returns a 1 based index of ContainerEffector -- Generic and Destroyable (ex Napalm vs Fire Shield)
+	Table getEffectors(bool destroyable) //returns a 1 based index of ContainerEffector -- either Generic or Destroyable
+}
+</code></pre>
+<h3>Example</h3>
+<pre><code class="language-lua">function main()
+	game.allowSkipTurn = false
+	game.timeLimit = 5
+	game.showInfo("How long can you survive against the Dark Knight?", true, true)
+	s = summon()
+	s.spell = "Summon Dark Knight"
+	s.onPlayersPanel = true
+	s.position = point(300, 850)
+	cre = game.createCreature(s)
+	fire = true
+	user = game.getUser()
+	while (not cre.isDead) do
+		if(fire and cre.yourTurn) then
+			fire = false
+			cre.castSpell("Rain of Fire", user.position)
+		elseif(not cre.yourTurn) then
+			fire = true
+		end
+
+		if(user.isDead) then
+			game.showInfo("Aww better luck next time!", true, true)
+
+			while (game.waiting) do
+				coroutine.yield(0)
+			end
+			game.win() --lose
+			return
+		end
+
+		coroutine.yield(0)
+	end
+	
+	game.showInfo("Looks like you win!<br>Congratulations!", true, true)
+	
+	while (game.waiting) do
+		coroutine.yield(0)
+	end
+	
+	game.win()
+end
+</code></pre>

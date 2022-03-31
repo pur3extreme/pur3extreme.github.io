@@ -1,0 +1,32 @@
+<h3>Indicator Class</h3>
+<pre><code class="language-csharp">
+class ContainerIndicator
+{
+	int x {get;set;}
+	int y {get;set;}
+	Point position {get;set;}
+	double angle {get;set;}
+	string color {get;set;}
+	IndicatorKind kind => get;
+
+	//Functions
+	void Destroy();
+}
+</code></pre>
+<h3>Example</h3>
+<pre><code class="language-lua">function main()
+	game.showInfo("Can you lose the green arrow?")
+	game.terrainDestruction  = false
+	user = game.getUser()
+	indicator = game.createIndicator(IndicatorKind.MovingArrow, user.position, "#00FF00")
+	u = createUI()
+	u.anchor = Anchor.TopLeft
+	u.position = point(100, -100)
+	u.pivot = point(0,1)
+	while (true) do
+		indicator.position = point(user.position.x, user.position.y + 100)
+		g.setText(tostring(indicator.x))
+		coroutine.yield(0)
+	end
+end
+</code></pre>

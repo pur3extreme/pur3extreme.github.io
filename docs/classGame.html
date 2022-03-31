@@ -1,0 +1,72 @@
+<h3>Game Class</h3>
+<pre><code class="language-csharp">//Single instance
+//Accessed through the variable "game"
+class ContainerGame
+{
+    int turn {get;set;}
+    int timeLimit {get;set;}
+    int random (int lower, int upper) => get;
+    int armageddonTurn {get;set;} //Default: 10
+    MapEnum armageddon {get;set;} 
+    bool allowMovement {get;set;} //Default: true
+    bool allowSkipTurn {get;set;} //Default:  true
+    bool terrainDestruction {get;set;} //Default: true
+    bool takeDamage = {get;set;} //Default: true
+    bool paused {get;set;} //Default: false
+    bool waiting  => get;
+    bool busy => get; //Game does not currently allow movement due to ongoing spells/movement logic
+    bool ongoing => get; //Any movement/spell going
+	
+    //functions
+    void showInfo(string message, bool onContinue = false, bool pauseGame = false)
+    ContainerCreature getUser() //returns the user's character playing the tutorial
+    Table getPlayers() //returns every player added to the UI panel as a 1 based index ContainerPlayer 
+	int getPlayerCount()
+    Table getMinions() //returns every ContainerCreature currently alive
+    Table findMinions(Point point, int radius) //returns every ContainerCreature on the map within the circle
+    Table findEffectors(Point point, int radius)
+	Point LineCast(Point a, Point b, ContainerCreature ignore = null, bool includeCreatures = true, bool includeEffectors = false, bool includePhantom = false)
+    Point LineCastOnlyTerrain(Point a, Point b)
+	ContainerCreature LineCastOnlyCreatures(Point a, Point b, ContainerCreature ignore = null, bool includeCreatures = true, bool includePhantom = false)
+	void win()
+    void nextTurn()
+    ContainerSpell getSpell(string name)
+    SpellEnum getSpellEnum(string name)
+    string getSpellName(SpellEnum id)
+    MapEnum getMapID()
+    string getMapRealName(MapEnum id)
+    string getMapShortName(MapEnum id)
+    string getArmageddonName(MapEnum id)
+    void panCamera(Point point, bool interuptable = true)
+    ContainerCreature createCreature(Summon summon)
+    void clearIndicators()
+    ContainerIndicator createIndicator(IndicatorKind kind, Point point, string hexColor, int radius, double angle = 0, double lifetime = 0)
+}
+</code></pre>
+<h3>Example</h3>
+<pre><code class="language-lua">function main()
+	game.showInfo("Welcome to this glorious tutorial! Do you have what it takes to kill the mighty wraith?")
+	game.allowSkipTurn = false
+	
+	game.getUser().addSpell(SpellEnum.Fire_Ball)
+	
+	sum = summon()
+	sum.spell = SpellEnum.Summon_Wraith
+	sum.position = point(450, 850)
+	sum.onPlayersPanel = true
+	wraith = game.createCreature(sum)
+	wraith.health = 250
+	
+	while (not wraith.isDead) do
+		coroutine.yield(0)
+	end
+	
+	game.showInfo("Looks like you win!<br>Congratulations!", true, true)
+	
+	while (game.waiting) do
+		coroutine.yield(0)
+	end
+	
+	game.win()
+end
+</code></pre>

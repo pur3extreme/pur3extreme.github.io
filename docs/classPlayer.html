@@ -1,0 +1,43 @@
+<h3>Player Class</h3>
+<pre><code class="language-csharp">
+class ContainerPlayer
+{
+	int localTurn {get;set;}
+	string name => get;
+	int team => get;
+	bool yourTurn => get;
+	
+	//Functions
+	Table getCreatures() //1 based index
+	ContainerCreature getCreature(int index) //1 based index
+	int getMinionCount()
+}
+</code></pre>
+<h3>Example</h3>
+<pre><code class="language-lua">function main()
+	--1 based indexing
+	players = game.getPlayers()
+	p1 = players[1]
+	minions = p1.getCreatures()
+
+	game.showInfo("This test code works? " .. tostring(minions[1] == game.getUser()), true)
+	
+	while (game.waiting) do
+		coroutine.yield(0)
+	end
+	
+	game.showInfo("Players name: " .. p1.name, true)
+	
+	while (game.waiting) do
+		coroutine.yield(0)
+	end	
+	
+	game.showInfo("Tutorial complete", true)
+	
+	while (game.waiting) do
+		coroutine.yield(0)
+	end
+
+	game.win()
+end
+</code></pre>

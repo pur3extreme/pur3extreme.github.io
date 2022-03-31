@@ -1,0 +1,24 @@
+<h3>Tower Class</h3>
+<pre><code class="language-csharp">class ContainerTower
+{
+	int health {get;set}
+	int maxHealth {get;set}
+	int x {get;set}
+	int y {get;set}
+	Point position {get;set}
+	bool isDead => get;
+
+	//Functions
+	TowerType getType()
+	void kill()
+}
+</code></pre>
+<h3>Example</h3>
+<pre><code class="language-lua">function main()
+	--Uncomment the below line to create a tower
+	--game.getUser().castSpell("Arcane Tower", point(0,0))
+	game.ShowInfo("User " .. (game.getUser().inTower and "is" or "is not") .. " in a tower")
+	tower = game.getUser().getTower()
+	--additional logic goes here...
+end
+</code></pre>

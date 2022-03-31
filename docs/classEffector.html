@@ -1,0 +1,24 @@
+<h3>Effector Class</h3>
+<pre><code class="language-csharp">
+public class ContainerEffector
+{
+	int x {get;set;}
+	int y {get;set;}
+	Point position {get;set;}
+	int turnsAlive {get;set;}
+	int maxTurnsAlive {get;set;}
+	bool active {get;set;}
+	EffectorType type => get;
+
+	//Functioins
+	void destroy()
+	void turnPassed() //May destroy its self
+}
+</code></pre>
+<h3>Example</h3>
+<pre><code class="language-lua">function main()
+	game.getUser().castSpell("Aura of Decay", point(500,500))
+	effectors = game.findEffectors(point(400, 400), 150)
+	game.ShowInfo("Found: " .. tostring(effectors[1].type))
+end
+</code></pre>

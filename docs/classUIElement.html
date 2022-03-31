@@ -1,0 +1,61 @@
+<h3>UIElement Class</h3>
+<pre><code class="language-csharp">class UIElement
+{
+	object graphic {get;set;} //Default = 0; //index (resource 0-4) or spell name
+	Anchor anchor {get;set;} //Default = Anchor.MiddleCenter;
+	double width {get;set;} //Default = 100;
+	double height {get;set;} //Default = 100;
+	double x {get;set;} //Default = 0;
+	double y {get;set;} //Default = 0;
+	Point position {get;set;}
+	Point pivot {get;set;}
+	double pivot_x {get;set;} //Default = 0.5;
+	double pivot_y {get;set;} //Default = 0.5;
+	double angle {get;set;} //Default = 0;
+	string onClick {get;set;} //Default = null;
+	object clickID {get;set;} //Default = null;
+	bool clickDestroy {get;set;} //Default = true;
+	string color {get;set;} //Default = "#7B7B7B";
+	string text {get;set;} //Default = null;
+	string textColor {get;set;} //Default = "#FFFFFF";
+	AlignHorizontal textAlignment {get;set;} //Default = AlignHorizontal.Center;
+	AlignVertical textVertical {get;set;} //Default = AlignVertical.Middle;
+	int textStyle {get;set;} //Default = 0; //FontStyles
+	double textSize {get;set;} //Default = 24;
+
+	//Functions
+	//Alias = "createUI()"
+	static UIElement createUI(UIElement parent)
+	UIElement duplicate(UIElement parent) //duplicates the ui with a 'new' parent
+}
+</code></pre>
+<h3>Example</h3>
+<pre><code class="language-lua">function main()
+	game.ShowInfo("Wack-a-" .. "Rabbit")
+	u = createUI()
+	u.onClick = "onClick"
+	u.clickID = "Rabbit"
+	u.text = tostring(u.clickID)
+	animals = {}; animals[0] = "Mole"; animals[1] = "Rat"; animals[2] = "Mouse";
+	while true do
+		coroutine.yield(0)
+	end
+end
+
+function tablelength(T)
+  local count = 0
+  for _ in pairs(T) do count = count + 1 end
+  return count
+end
+
+function onClick(id, button)
+	u = createUI(nil)
+	u.width = 200
+	u.onClick = "onClick"
+	u.clickID = game.random(0, tablelength(animals))
+	u.text = tostring(animals[u.clickID])
+	u.x = game.random(50 - game.screenWidth/2, game.screenWidth/2 - 50) 
+	u.y = game.random(-game.screenHeight/2+50, -50 + game.screenHeight/2)
+	game.ShowInfo("Wack-a-" .. u.text .. tostring(u.position)) 
+end
+</code></pre>

@@ -1,0 +1,43 @@
+<h3>Summon Class</h3>
+<pre><code class="language-csharp">
+class Summon
+{
+	object spell = null; //if null it spawns a player creature
+	Point position = new Point(750,750);
+	int team = 1;
+	bool onPlayersPanel = false;
+	string name = "";
+	bool playSound = true;
+	Table colors = null;
+	Table spells = null;
+	Table outfit = null;
+	int elemental = -1;
+
+	//Alias = "summon()"
+	static Summon construct(object spell = null, Point point = null, int team = 1, Table colors = null, bool playSound = true, bool onPlayersPanel = false, string name = "", Table outfit = null, Table spells = null, int elemental = -1)
+}
+</code></pre>
+<h3>Example</h3>
+<pre><code class="language-lua">function main()
+	toSummon = summon()
+	toSummon.onPlayersPanel = true
+	toSummon.name = "Jeff"
+	toSummon.spells = {"Fire Ball"}
+	toSummon.outfit = {73, 0, 24, 0, 49, 55, 0, 0, 0}
+	toSummon.colors = {"#FFCC00", "#FF00FF", "#FFFF33", "#FFCC99"}
+	game.createCreature(toSummon)
+	toSummon.position = point(900, 500)
+	toSummon.team = 2
+	toSummon.name = "Vern"
+	toSummon.outfit = {25, 11, 14, 24, 7, 5, 0, 0, 0}
+	toSummon.colors = {"#5300FF", "#405B68", "#DE48EE", "#7C2346"}
+	toSummon.spells = {"Arcane Arrows"}
+	game.createCreature(toSummon)
+	
+	--Next creature
+	toSummon = summon(SpellEnum.Summon_Dwarf, point(350, 850), game.getPlayerCount()-1)
+	sum = game.createCreature(toSummon)
+	
+	game.ShowInfo(sum.name);
+end
+</code></pre>
