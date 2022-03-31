@@ -56,9 +56,9 @@ class ContainerCreature
 	int castedCountThisTurn()
 	int castedDamage(SpellEnum spellID)
 	int getMinionCount()
-	void castSpell(object spellObj, Point target, double angle, double power = 1, bool setGameBusy = true) //spellObj = One of: Spell Name/SpellEnum/Other Spell/index
-	void fireAt(object spellObj, ContainerCreature target, double anglevariance = 0, bool setGameBusy = true) //spellObj = One of: Spell Name/SpellEnum/Other Spell/index
-	void fireAt(object spellObj, Point target, double anglevariance = 0, bool setGameBusy = true) //spellObj = One of: Spell Name/SpellEnum/Other Spell/index
+	void castSpell(object spellObj, Point target, double angle, double power = 1) //spellObj = One of: Spell Name/SpellEnum/Other Spell/index
+	void fireAt(object spellObj, ContainerCreature target, double anglevariance = 0) //spellObj = One of: Spell Name/SpellEnum/Other Spell/index
+	void fireAt(object spellObj, Point target, double anglevariance = 0) //spellObj = One of: Spell Name/SpellEnum/Other Spell/index
 	Table getEffectors() //returns a 1 based index of ContainerEffector -- Generic and Destroyable (ex Napalm vs Fire Shield)
 	Table getEffectors(bool destroyable) //returns a 1 based index of ContainerEffector -- either Generic or Destroyable
 }
