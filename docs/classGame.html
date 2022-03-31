@@ -16,6 +16,8 @@ class ContainerGame
     bool waiting  => get;
     bool busy => get; //Game does not currently allow movement due to ongoing spells/movement logic
     bool ongoing => get; //Any movement/spell going
+    int screenWidth => get; //canvas width
+    int screenHeight => get; //canvas height
 	
     //functions
     void showInfo(string message, bool onContinue = false, bool pauseGame = false)
@@ -30,6 +32,7 @@ class ContainerGame
 	ContainerCreature LineCastOnlyCreatures(Point a, Point b, ContainerCreature ignore = null, bool includeCreatures = true, bool includePhantom = false)
 	void win()
     void nextTurn()
+    string getInputString()
     ContainerSpell getSpell(string name)
     SpellEnum getSpellEnum(string name)
     string getSpellName(SpellEnum id)
