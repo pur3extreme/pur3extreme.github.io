@@ -42,11 +42,11 @@ class ContainerCreature
 	void Walk(int dir)
 	void setDirection(int dir)
 
-	void Die()
+	void die()
 	int getFamiliarLevel(Book book)
 	int getActivateableFamiliarLevel()
 	Book getActivateableFamiliarBookID()
-	void increaseFamiliarLevel(int bookID = -1, bool dealDmg = true, bool capAt5 = true)
+	void increaseFamiliarLevel(Book book = Book.Nothing, bool dealDmg = true, bool capAt5 = true) //Book.Nothing will use the creatures activateable book if one exists
 	ContainerSpell addSpell(object spellObj) //spellObj = One of: Spell Name/SpellEnum/Other Spell
 	void removeSpell(object spellObj) //spellObj = One of: Spell Name/SpellEnum/Other Spell/index
 	void removeSpell(ContainerSpell spell) //removes this exact spell
