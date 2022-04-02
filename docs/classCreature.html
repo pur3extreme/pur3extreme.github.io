@@ -41,6 +41,11 @@ class ContainerCreature
 	void HighJump(int dir)
 	void Walk(int dir)
 	void setDirection(int dir)
+	
+	bool inside(ContainerIndicator a)
+        bool inside(Point a, double radius)
+        bool overlap(ContainerIndicator a)
+        bool overlap(Point a, double radius = 0)
 
 	void die()
 	int getFamiliarLevel(Book book)
