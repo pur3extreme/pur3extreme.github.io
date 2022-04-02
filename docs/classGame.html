@@ -14,7 +14,7 @@ class ContainerGame
     bool allowMovement; //Default: true
     bool allowSkipTurn; //Default:  true
     bool terrainDestruction; //Default: true
-    bool takeDamage =; //Default: true
+    bool takeDamage; //Default: true - Can the player take damage?
     bool paused; //Default: false
     bool waiting  => get;
     bool busy => get; //Game does not currently allow movement due to ongoing spells/movement logic
