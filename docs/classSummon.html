@@ -6,6 +6,8 @@ class Summon
 	Point position; //Default = new Point(750,750);
 	int team; //Default = 1;
 	bool onPlayersPanel; //Default  = false;
+	bool useAI; //Default = true; - ONLY valid if onPlayersPanel == true
+        bool no_AI_still_use_turn; //Default = false; ONLY valid if useAI == true //Only used if you have some sort of AI yourself
 	string name; //Default  = "";
 	bool playSound; //Default  = true;
 	Table colors; //Default  = null;
