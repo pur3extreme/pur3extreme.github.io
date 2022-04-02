@@ -3,16 +3,16 @@
 //Accessed through the variable "game"
 class ContainerGame
 {
-    int turn {get;set;}
-    int timeLimit {get;set;}
+    int turn;
+    int timeLimit;
     int random (int lower, int upper) => get;
-    int armageddonTurn {get;set;} //Default: 10
-    MapEnum armageddon {get;set;} 
-    bool allowMovement {get;set;} //Default: true
-    bool allowSkipTurn {get;set;} //Default:  true
-    bool terrainDestruction {get;set;} //Default: true
-    bool takeDamage = {get;set;} //Default: true
-    bool paused {get;set;} //Default: false
+    int armageddonTurn; //Default: 10
+    MapEnum armageddon; 
+    bool allowMovement; //Default: true
+    bool allowSkipTurn; //Default:  true
+    bool terrainDestruction; //Default: true
+    bool takeDamage =; //Default: true
+    bool paused; //Default: false
     bool waiting  => get;
     bool busy => get; //Game does not currently allow movement due to ongoing spells/movement logic
     bool ongoing => get; //Any movement/spell going
