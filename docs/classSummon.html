@@ -2,16 +2,16 @@
 <pre><code class="language-csharp">
 class Summon
 {
-	object spell = null; //if null it spawns a player creature
-	Point position = new Point(750,750);
-	int team = 1;
-	bool onPlayersPanel = false;
-	string name = "";
-	bool playSound = true;
-	Table colors = null;
-	Table spells = null;
-	Table outfit = null;
-	int elemental = -1;
+	object spell; //Default  = null; //if null it spawns a player creature
+	Point position; //Default = new Point(750,750);
+	int team; //Default = 1;
+	bool onPlayersPanel; //Default  = false;
+	string name; //Default  = "";
+	bool playSound; //Default  = true;
+	Table colors; //Default  = null;
+	Table spells; //Default  = null;
+	Table outfit; //Default  = null;
+	int elemental; //Default  = -1;
 
 	//Alias = "summon()"
 	static Summon construct(object spell = null, Point point = null, int team = 1, Table colors = null, bool playSound = true, bool onPlayersPanel = false, string name = "", Table outfit = null, Table spells = null, int elemental = -1)
