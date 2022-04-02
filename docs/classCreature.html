@@ -6,19 +6,19 @@ class ContainerCreature
 	string name => get;
 	SpellEnum spellEnum => get;
 	int healthAndTower => get; //health + tower health
-	int health {get;set;}
-	int maxHealth {get;set;}
-	int shield {get;set;}
-	int x {get;set;}
-	int y {get;set;}
-	Point position {get;set;}
-	ContainerPlayer parent {get;set;}
-	int weight {get;set;} //0-100
-	int radius {get;set;} //1-200
-	bool stunned {get;set;}
-	bool superStunned {get;set;}
-	bool waterWalking {get;set;}
-	bool frostWalking {get;set;}
+	int health;
+	int maxHealth;
+	int shield;
+	int x;
+	int y;
+	Point position;
+	ContainerPlayer parent;
+	int weight; //0-100
+	int radius; //1-200
+	bool stunned;
+	bool superStunned;
+	bool waterWalking;
+	bool frostWalking;
 	CreatureType type => get;
 	CreatureRace race => get;
 	bool yourTurn => get;
