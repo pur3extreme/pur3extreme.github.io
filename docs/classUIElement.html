@@ -1,27 +1,27 @@
 <h3>UIElement Class</h3>
 <pre><code class="language-csharp">class UIElement
 {
-	object graphic {get;set;} //Default = 0; //index (resource 0-4) or spell name
-	Anchor anchor {get;set;} //Default = Anchor.MiddleCenter;
-	double width {get;set;} //Default = 100;
-	double height {get;set;} //Default = 100;
-	double x {get;set;} //Default = 0;
-	double y {get;set;} //Default = 0;
-	Point position {get;set;}
-	Point pivot {get;set;}
-	double pivot_x {get;set;} //Default = 0.5;
-	double pivot_y {get;set;} //Default = 0.5;
-	double angle {get;set;} //Default = 0;
-	string onClick {get;set;} //Default = null;
-	object clickID {get;set;} //Default = null;
-	bool clickDestroy {get;set;} //Default = true;
-	string color {get;set;} //Default = "#7B7B7B";
-	string text {get;set;} //Default = null;
-	string textColor {get;set;} //Default = "#FFFFFF";
-	AlignHorizontal textAlignment {get;set;} //Default = AlignHorizontal.Center;
-	AlignVertical textVertical {get;set;} //Default = AlignVertical.Middle;
-	int textStyle {get;set;} //Default = 0; //FontStyles
-	double textSize {get;set;} //Default = 24;
+	object graphic; //Default = 0; //index (resource 0-4) or spell name
+	Anchor anchor; //Default = Anchor.MiddleCenter;
+	double width; //Default = 100;
+	double height; //Default = 100;
+	double x; //Default = 0;
+	double y; //Default = 0;
+	Point position; //Default = point(0,0)
+	Point pivot; //Default = point(0.5,0.5)
+	double pivot_x; //Default = 0.5;
+	double pivot_y; //Default = 0.5;
+	double angle; //Default = 0;
+	string onClick; //Default = null;
+	object clickID; //Default = null;
+	bool clickDestroy; //Default = true;
+	string color; //Default = "#7B7B7B";
+	string text; //Default = null;
+	string textColor; //Default = "#FFFFFF";
+	AlignHorizontal textAlignment; //Default = AlignHorizontal.Center;
+	AlignVertical textVertical; //Default = AlignVertical.Middle;
+	int textStyle; //Default = 0; //FontStyles
+	double textSize; //Default = 24;
 
 	//Functions
 	//Alias = "createUI()"
