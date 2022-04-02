@@ -5,6 +5,8 @@ class ContainerGame
 {
     int turn;
     int timeLimit;
+    double totalTimeElapsed =>  get;
+    double turnTime => get;
     int random (int lower, int upper) => get;
     bool winOnDeath; //Default: true //Check to win/lose when a non-pawn dies
     int armageddonTurn; //Default: 10
