@@ -60,13 +60,13 @@ end
 --Changes the player size on key press
 function onKeyHeld(key)
 	if(key == KeyCode.Alpha1) then
-		game.getUser().radius = game.getUser().radius-1;
-		game.showInfo(tostring(game.getUser().radius))
+		user.radius = user.radius-1;
+		game.showInfo(tostring(user.radius))
 	end
 	
 	if(key == KeyCode.Alpha2) then
-		game.getUser().radius = game.getUser().radius+1;
-		game.showInfo(tostring(game.getUser().radius))
+		user.radius = user.radius+1;
+		game.showInfo(tostring(user.radius))
 	end
 end
 </code></pre>
