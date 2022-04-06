@@ -9,8 +9,9 @@ Tutorial Creator <br>
 game => ContainerGame 
 point(int x, int y) => Point 
 createUI() => UIElement
-summon() => Summon --container to call game.createCreature(summon)
+summon() => Summon --Container to call game.createCreature(summon)
 spell(object spellObj) => --returns ContainerSpell .. spellObj = One of: Spell Name/SpellEnum/Other Spell
+print(string) --Logs a message to the chatbox if started from the tutorial creator .. otherwise does nothing
 
 --Registrable callbacks
 onKeyDown(KeyCode)
