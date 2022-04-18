@@ -32,5 +32,22 @@ class Answer
 }
 </code></pre>
 <h3>Example</h3>
-<pre><code class="language-lua">
+<pre><code class="language-lua">function main()
+	poll = createPoll("Stating the Obvious!")
+	item = poll.addItem("Underdark is the best")
+	item.multipleSelection = true
+	item.addAnswer("Yes")
+	item.addAnswer("No")
+	item.addAnswer("Maybe")
+	item.addAnswer("No Way!")
+
+	item = poll.addItem("Overlight is the best")
+	item.addAnswer("Yes")
+	item.addAnswer("No")
+
+	item = poll.addItem("Pur3 is the best")
+	item.addAnswer("Explain", false, true)
+	poll.test()
+	--poll.sendToServer()
+end
 </code></pre>
