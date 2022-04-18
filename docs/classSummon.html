@@ -13,10 +13,10 @@ class Summon
 	Table colors; //Default  = null;
 	Table spells; //Default  = null;
 	Table outfit; //Default  = null;
-	int elemental; //Default  = -1;
+	BookOf elemental; //Default  = BookOf.Nothing;
 
 	//Alias = "summon()"
-	static Summon construct(object spell = null, Point point = null, int team = 1, Table colors = null, bool playSound = true, bool onPlayersPanel = false, string name = "", Table outfit = null, Table spells = null, int elemental = -1)
+	static Summon construct(object spell = null, Point point = null, int team = 1, Table colors = null, bool playSound = true, bool onPlayersPanel = false, string name = "", Table outfit = null, Table spells = null, BookOf elemental = BookOf.Nothing)
 }
 </code></pre>
 <h3>Example</h3>
