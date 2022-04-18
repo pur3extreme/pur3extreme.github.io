@@ -117,7 +117,10 @@ window.onhashchange = function() {
 				}
 			}
 		}
-		load('docs/home.html')
+		if(window.location.hash == '#poll')
+		   load('docs/classPoll.html')
+		else
+		   load('docs/home.html')
 	}
 </script>
 </head>
