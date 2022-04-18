@@ -1,1 +1,33 @@
 
+<h3>Player Class</h3>
+<pre><code class="language-csharp">
+class MyPoll
+{
+  string name = "";
+  List<Item> items = new List<Item>();
+  
+	//Functions
+  Item addItem(string question, bool multipleSelection = false, bool requireAnswer = true)
+}
+
+class Item
+{
+  string question = "";
+  bool multipleSelection = false;
+  bool requiresAnswer = true;
+  List<Answer> answers = new List<Answer>();
+  
+	//Functions
+  Answer addAnswer(string answer, bool checkable = true, bool allowUserInput = false);
+}
+
+class Answer
+{
+  string text = "";
+  bool allowUserInput = false;
+  bool checkable = true;
+}
+</code></pre>
+<h3>Example</h3>
+<pre><code class="language-lua">
+</code></pre>
