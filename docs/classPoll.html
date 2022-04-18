@@ -6,7 +6,7 @@ class MyPoll
   string name = "";
   List<Item> items = new List<Item>();
   
-	//Functions
+  //Functions
   Item addItem(string question, bool multipleSelection = false, bool requireAnswer = true)
 }
 
@@ -17,8 +17,11 @@ class Item
   bool requiresAnswer = true;
   List<Answer> answers = new List<Answer>();
   
-	//Functions
+  //Functions
   Answer addAnswer(string answer, bool checkable = true, bool allowUserInput = false);
+  void test();
+  void closePoll();
+  void sendToServer(); //Dev/Head Mod
 }
 
 class Answer
