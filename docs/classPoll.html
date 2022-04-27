@@ -34,6 +34,7 @@ class Answer
 <h3>Example</h3>
 <pre><code class="language-lua">function main()
 	poll = createPoll("Stating the Obvious!")
+	
 	item = poll.addItem("Underdark is the best")
 	item.multipleSelection = true
 	item.addAnswer("Yes")
@@ -47,7 +48,10 @@ class Answer
 
 	item = poll.addItem("Pur3 is the best")
 	item.addAnswer("Explain", false, true)
+	
 	poll.test()
+	
+	--commented out so this doesn't run
 	--poll.sendToServer()
 end
 </code></pre>
