@@ -27,8 +27,8 @@ class ContainerGame
     ContainerCreature getUser() //returns the user's character playing the tutorial
     Table getPlayers() //returns every player added to the UI panel as a 1 based index ContainerPlayer 
 	int getPlayerCount()
-    Table getMinions() //returns every ContainerCreature currently alive
-    Table findMinions(Point point, int radius) //returns every ContainerCreature on the map within the circle
+    Table getCreatures() //returns every ContainerCreature currently alive
+    Table findCreatures(Point point, int radius) //returns every ContainerCreature on the map within the circle
     Table findEffectors(Point point, int radius)
 	Point LineCast(Point a, Point b, ContainerCreature ignore = null, bool includeCreatures = true, bool includeEffectors = false, bool includePhantom = false)
     Point LineCastOnlyTerrain(Point a, Point b)
