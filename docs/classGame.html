@@ -11,6 +11,8 @@ class ContainerGame
     bool winOnDeath; //Default: true //Check to win when a non-pawn dies
     int armageddonTurn; //Default: 10
     MapEnum armageddon; 
+    bool allowInput; //Default: true - Diable/Enable all user controls 
+    bool allowCallbacks; //Default: true - onKeyDown etc
     bool allowMovement; //Default: true
     bool allowSkipTurn; //Default:  true
     bool terrainDestruction; //Default: true
@@ -21,6 +23,7 @@ class ContainerGame
     bool ongoing => get; //Any movement/spell going
     int screenWidth => get; //canvas width
     int screenHeight => get; //canvas height
+    double gravity; //Default: -0.8
 	
     //functions
     void showInfo(string message, bool onContinue = false, bool pauseGame = false)
@@ -45,6 +48,8 @@ class ContainerGame
     string getArmageddonName(MapEnum id)
     void panCamera(Point point, bool interuptable = true)
     ContainerCreature createCreature(Summon summon)
+    void clearMap(int width = -1, int height = -1) //Removes all land (Does not force anything to move)
+    void resetMap() //Results the terrain to the beginning layout
     void clearIndicators()
     ContainerIndicator createIndicator(IndicatorKind kind, Point point, string hexColor, int radius, double angle = 0, double lifetime = 0)
 }
