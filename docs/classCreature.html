@@ -14,14 +14,14 @@ class ContainerCreature
 	Point position;
 	ContainerPlayer parent;
 	int weight; //0-100
-	int radius; //1-200
+	int radius; //1-8192
 	bool stunned;
 	bool superStunned;
 	bool waterWalking;
 	bool frostWalking;
 	bool inWater => get; //Player is sunk
-	CreatureType type => get;
-	CreatureRace race => get;
+	CreatureType type;
+	CreatureRace race;
 	bool yourTurn => get;
 	bool inTower => get;
 	bool isMoving => get;
@@ -29,9 +29,10 @@ class ContainerCreature
 	bool isMounted => get;
 	bool isDead => get;
 	bool isPawn => get;
-	bool isFlying => get;
+	bool isFlying;
 	bool isMountable => get;
 	bool canMount => get;
+	bool diesInWater;
 	
 	//Functions
 	ContainerCreature getRider();
@@ -48,7 +49,7 @@ class ContainerCreature
         bool overlap(ContainerIndicator a)
         bool overlap(Point a, double radius = 0)
 
-	void die()
+	void die(bool playSound = true)
 	int getFamiliarLevel(Book book)
 	int getActivateableFamiliarLevel()
 	Book getActivateableFamiliarBookID()
@@ -62,6 +63,7 @@ class ContainerCreature
 	int castedCountThisTurn()
 	int castedDamage(SpellEnum spellID)
 	int getMinionCount()
+	int getHashCode()
 	void castSpell(object spellObj, Point target, double angle, double power = 1) //spellObj = One of: Spell Name/SpellEnum/Other Spell/index
 	void fireAt(object spellObj, ContainerCreature target, double anglevariance = 0) //spellObj = One of: Spell Name/SpellEnum/Other Spell/index
 	void fireAt(object spellObj, Point target, double anglevariance = 0) //spellObj = One of: Spell Name/SpellEnum/Other Spell/index
