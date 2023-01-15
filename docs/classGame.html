@@ -24,6 +24,9 @@ class ContainerGame
     int screenWidth => get; //canvas width
     int screenHeight => get; //canvas height
     double gravity; //Default: -0.8
+    bool wind; //Default: true
+    double winDir; //0-360
+    double windPower; //Game uses: 0.0-0.05
 	
     //functions
     void showInfo(string message, bool onContinue = false, bool pauseGame = false)
