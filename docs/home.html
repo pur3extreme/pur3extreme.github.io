@@ -12,6 +12,8 @@ createUI() => UIElement
 summon() => Summon --Container to call game.createCreature(summon)
 spell(object spellObj) => --returns ContainerSpell .. spellObj = One of: Spell Name/SpellEnum/Other Spell
 print(string) --Logs a message to the chatbox if started from the tutorial creator .. otherwise does nothing
+wait(double seconds) --Is a coroutine that will wait for the given amount of seconds 
+waitFPS(int frames) --the game runs at 30 FPS
 
 --Registrable callbacks
 onKeyDown(KeyCode)
@@ -55,6 +57,7 @@ FontStyles
 --WIDTH = 500
 --SPELLS = {}
 --DEBUG = FALSE
+--NOBACKGROUND --will turn the background solid black
 
 function main()
 	game.ShowInfo("Welcome to this example tutorial - Change your radius with the 1 and 2 keys", false, false)
