@@ -8,6 +8,7 @@ Tutorial Creator <br>
 <pre><code class="language-lua">--Global variables
 game => ContainerGame 
 point(double x, double y) => Point 
+color(r, g, b, a) => LuaColor
 createUI() => UIElement
 summon() => Summon --Container to call game.createCreature(summon)
 spell(object spellObj) => --returns ContainerSpell .. spellObj = One of: Spell Name/SpellEnum/Other Spell
@@ -33,6 +34,7 @@ UIElement
 --Classes
 Summon 
 Point
+LuaColor
 
 --Enums
 KeyCode
@@ -50,6 +52,16 @@ ExplosionCutout
 TowerType
 FontStyles
 </code></pre>
+
+<pre><code class="language-lua">--NAME = The name of the tutorial goes here
+--DESCRIPTION = A short description
+--MAP = Empty --Or choose a map from the dropdown in the UI (Sandbox/Tutorial1..etc)
+--HEIGHT = 1025 --Custom Map Height: Omit if using a non-empty MAP
+--WIDTH = 500 --Custom Map Width: Omit if using a non-empty MAP
+--SPELLS = {SpellEnum.Fire_Ball, SpellEnum.Clock_Tower} --Spells the player starts with
+--NOBACKGROUND --will turn the background solid black
+</code></pre>
+
 <h3>Example</h3>
 <pre><code class="language-lua">--NAME = Tutorial
 --DESCRIPTION = 
@@ -57,8 +69,6 @@ FontStyles
 --HEIGHT = 1025
 --WIDTH = 500
 --SPELLS = {}
---DEBUG = FALSE
---NOBACKGROUND --will turn the background solid black
 
 function main()
 	game.ShowInfo("Welcome to this example tutorial - Change your radius with the 1 and 2 keys", false, false)
