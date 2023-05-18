@@ -27,6 +27,10 @@ class ContainerGame
     bool wind; //Default: true
     double winDir; //0-360
     double windPower; //Game uses: 0.0-0.05
+    bool allowBounce;
+    bool isUsingTouchControls;
+    Point cameraPosition; //Clients camera
+    double cameraZoom; //15-850
 	
     //functions
     void showInfo(string message, bool onContinue = false, bool pauseGame = false)
@@ -55,6 +59,19 @@ class ContainerGame
     void resetMap() //Results the terrain to the beginning layout
     void clearIndicators()
     ContainerIndicator createIndicator(IndicatorKind kind, Point point, string hexColor, int radius, double angle = 0, double lifetime = 0)
+    void clientRefreshSpells(); //Good to use if you remove/add a spell from their spellbook - Refreshes the UI 
+    void startCoroutine(Function f, bool runAsCoroutine = true, double seconds = 0) //runAsCoroutine vs an Update funciton (called from the beginning each frame) - use 0 seconds to run indefinitely
+    void devCommand(string s, Point p = null); //just like the sandbox console
+    
+    //Drawing Functions ~ must call applyDraw() after you do the draw operations
+    LuaColor getMapPixel(int x, int y)
+    void setMapPixel(int x, int y, LuaColor c)
+    void drawRectangle(int x, int y, int width, int height, LuaColor c)
+    void drawEllipseOutline(int x, int y, int radiusX, int radiusY, int outlineWidth, LuaColor c)
+    void drawEllipse(int x, int y, int radiusX, int radiusY, LuaColor c)
+    void blit(ExplosionCutout ex, Point point, bool ignoreAlpha = false, bool apply = true) //ignoreAlpha for things like Forest Seed - Don't for explosion cutouts - auto apply if true
+    void blitRotate(ExplosionCutout ex, Point point, double rotation = 0, bool inFront = true, bool apply = true) //Not useable for explosion cutouts
+    void applyDraw(); //Always call this to update the visual map after all draw functions are complete    
 }
 </code></pre>
 <h3>Example</h3>
