@@ -33,7 +33,8 @@ class ContainerCreature
 	bool isMountable => get;
 	bool canMount => get;
 	bool diesInWater;
-	
+	bool arcaneMonster; //If true transformes into an Arcane Monster..Setting it to false will remove bonuses but not revert anything else
+	bool takeDamage; //like game.takeDamage makes it immune to damage but for a creature in particular 
 	//Functions
 	ContainerCreature getRider();
 	ContainerCreature getMount();
