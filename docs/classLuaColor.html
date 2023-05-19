@@ -2,11 +2,15 @@
 <pre><code class="language-csharp">class LuaColor
 {
 	byte r; //red
-  byte g; //green
-  byte b; //blue
-  byte a; //alpha
-
+  	byte g; //green
+  	byte b; //blue
+  	byte a; //alpha
+	
+	//functions
+	string toHex(); //returns the color as a hex string
+	
 	//To make a color "red_color = color(255, 0, 0, 255)"
+	//Or "blue_color = colorHex("#0000FFFF")
 }
 
 </code></pre>
