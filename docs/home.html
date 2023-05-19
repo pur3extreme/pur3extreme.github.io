@@ -17,10 +17,11 @@ wait(double seconds) --Is a coroutine that will wait for the given amount of sec
 waitFPS(int frames) --the game runs at 30 FPS
 
 --Registrable callbacks
-onKeyDown(KeyCode)
-onKeyHeld(KeyCode)
-onDeath(ContainerCreature)
-onSpellCast(ContainerCreature, ContainerSpell)
+onKeyDown(KeyCode) --called whenever the player presses a key
+onKeyHeld(KeyCode) --called whenever the player holds down a key
+onDeath(ContainerCreature) --called whenever a creature dies
+onSpellCast(ContainerCreature, ContainerSpell) --called when a spell is cast
+onFrame(frame) --called every time the game advances a frame
 
 --Containers (Cannot be created directly)
 ContainerGame
