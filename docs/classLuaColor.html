@@ -11,7 +11,63 @@
 
 </code></pre>
 <h3>Example</h3>
-  <pre><code class="language-lua">function main()
-  --todo make a color tutorial 
+  <pre><code class="language-lua">--NAME = Color Test
+--DESCRIPTION = Anyone can draw...something.
+--MAP = Sandbox
+--SPELLS = {}
+--DEBUG = TRUE
+
+--CODE--
+
+cur_color = color(0,255,0,255)
+buttons = {}
+
+function main()
+	game.showInfo("Use the mouse to draw on the map!")
+	game.drawEllipse(game.width/2-150, game.height/2, 75, 100, color(255,0,0,255))
+	game.drawEllipse(game.width/2+150, game.height/2, 75, 100, color(255,0,0,255))
+	game.drawRectangle(game.width/2-20, game.height/2-100, 40, 60, color(255,0,0,255))
+	game.drawRectangle(game.width/2-100, game.height/2-200, 200, 40, color(255,0,0,255))
+	game.applyDraw()
+	
+	ui(100, -110, "Red", color(255,0,0,255))
+	ui(200, -110, "Green", color(0,255,0,255))
+	ui(300, -110, "Blue", color(0,0,255,255))
+	ui(400, -110, "Clear", color(0,0,0,0))
+
+	while true do
+		coroutine.yield(0)
+	end
 end
+
+function changeColor(c, b)
+	cur_color = c
+	for k, v in pairs(buttons) do
+  		v.color = "#FFFFFFFF"
+	end
+	b.color = c.toHex()
+end
+
+
+function ui(x, y, text, color)
+	local b = createUI()
+	b.onClick =  "changeColor"
+	b.text = text
+	b.clickID = color
+	b.clickDestroy = false
+	b.anchor = Anchor.TopLeft
+	b.position = point(x,y)
+	buttons[#buttons+1] = b
+end
+
+
+function onKeyHeld(key)
+	if(game.mouseOverUI)then		return
+	end
+	if(key == KeyCode.Mouse0) then
+		game.drawEllipse(game.mousePosition.x, game.mousePosition.y, 10,10, cur_color)
+		game.applyDraw()
+	end
+end
+
 </code></pre>
