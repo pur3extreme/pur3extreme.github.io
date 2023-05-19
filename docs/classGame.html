@@ -31,7 +31,8 @@ class ContainerGame
     bool isUsingTouchControls;
     Point cameraPosition; //Clients camera
     double cameraZoom; //15-850
-	
+    Point mousePosition => get; //The users mouse position (in world coordinates)
+    bool mouseOverUI => get; //Is the users mouse over a 'blocking' UI element
     //functions
     void showInfo(string message, bool onContinue = false, bool pauseGame = false)
     ContainerCreature getUser() //returns the user's character playing the tutorial
@@ -62,6 +63,8 @@ class ContainerGame
     void clientRefreshSpells() //Good to use if you remove/add a spell from their spellbook - Refreshes the UI 
     void startCoroutine(Function f, bool runAsCoroutine = true, double seconds = 0) //runAsCoroutine vs an Update funciton (called from the beginning each frame) - use 0 seconds to run indefinitely
     void devCommand(string s, Point p = null) //just like the sandbox console
+    Point worldToCanvas(Point p) //Takes a world point and returns the point on the canvas (UI)
+    Point canvasToWorld(Point p) //Takes a canvas point (UI) and returns a world point
     
     //Drawing Functions ~ must call applyDraw() after you do the draw operations
     LuaColor getMapPixel(int x, int y)
