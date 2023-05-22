@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Main Arcanists 2 Website is Down</title>
+</head>
+<style>
+body,
+html {
+  margin: 0px;
+  padding: 0px;
+  position: fixed;
+  background-image: url('https://t3.ftcdn.net/jpg/05/55/99/28/360_F_555992864_Wlm4Agg8FpN32N8WqiEiOq29Wa1idhMR.jpg');
+  background-size: cover;
+}
+h1 { color:#FFFFFF;}
+canvas{
+  filter: blur(1px);
+    pointer-events:none;
+}
+a {background-color:#00000088; font-size:36px}
+.container {position:absolute;
+width:100%;
+height:100%;
+}
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+</style>
+<body>
+<div class="container"><div class="center">
+<center>
+<h1>The main Arcanists 2 website may be down</h1>
+<a href="play.arcanists2.com">Play Here!</a>
+<br>
+<br>
+<a href ="https://drive.google.com/drive/folders/1FUi9IcaE8Ny2rF-wVJJiw417JoFYRwyD?usp=sharing">Download the Client Here!</a>
+</center></div></div>
+<canvas id="canvas"></canvas>
+</body>
+
+<script>
+let c = init("canvas"),
+  w = (canvas.width = window.innerWidth),
+  h = (canvas.height = window.innerHeight);
+//initiation
+
+class firefly{
+  constructor(){
+    this.x = Math.random()*w;
+    this.y = Math.random()*h;
+    this.s = Math.random()*2;
+    this.ang = Math.random()*2*Math.PI;
+    this.v = this.s*this.s/4;
+  }
+  move(){
+    this.x += this.v*Math.cos(this.ang);
+    this.y += this.v*Math.sin(this.ang);
+    this.ang += Math.random()*20*Math.PI/180-10*Math.PI/180;
+  }
+  show(){
+    c.beginPath();
+    c.arc(this.x,this.y,this.s,0,2*Math.PI);
+    c.fillStyle="#fddba3";
+    c.fill();
+  }
+}
+
+let f = [];
+
+function draw() {
+  if(f.length < 100){
+    for(let j = 0; j < 10; j++){
+     f.push(new firefly());
+  }
+     }
+  //animation
+  for(let i = 0; i < f.length; i++){
+    f[i].move();
+    f[i].show();
+    if(f[i].x < 0 || f[i].x > w || f[i].y < 0 || f[i].y > h){
+       f.splice(i,1);
+       }
+  }
+}
+
+let mouse = {};
+let last_mouse = {};
+
+canvas.addEventListener(
+  "mousemove",
+  function(e) {
+    last_mouse.x = mouse.x;
+    last_mouse.y = mouse.y;
+
+    mouse.x = e.pageX - this.offsetLeft;
+    mouse.y = e.pageY - this.offsetTop;
+  },
+  false
+);
+function init(elemid) {
+  let canvas = document.getElementById(elemid),
+    c = canvas.getContext("2d"),
+    w = (canvas.width = window.innerWidth),
+    h = (canvas.height = window.innerHeight);
+  c.fillStyle = "rgba(30,30,30,1)";
+  c.fillRect(0, 0, w, h);
+  return c;
+}
+
+window.requestAnimFrame = (function() {
+  return (
+    window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(callback) {
+      window.setTimeout(callback);
+    }
+  );
+});
+
+function loop() {
+  window.requestAnimFrame(loop);
+  c.clearRect(0, 0, w, h);
+  draw();
+}
+
+window.addEventListener("resize", function() {
+  (w = canvas.width = window.innerWidth),
+  (h = canvas.height = window.innerHeight);
+  loop();
+});
+
+loop();
+setInterval(loop, 1000 / 60);
+</script>
+</html>
+
+
