@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Imager</title>
+
+    <style>
+        @font-face {
+            font-family: 'Courgette';
+            src: url('Courgette-Regular.ttf') format('ttf'); /* Replace 'custom-font.woff' with your actual font file */
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'CustomFont', sans-serif; /* Set the default font for the entire page */
+        }
+      
+        div {
+            background: url('part_77.png') no-repeat center center fixed;
+            background-size: cover;
+            padding: 20px; /* Add some padding to the div */
+        }
+      
+        /* Apply custom font to the <p> element */
+        p {
+            font-family: 'Courgette', sans-serif;
+        }
+    </style>
+
+    <script src="html2canvas.js"></script>
+    <script>
+        function DoesSomething() {
+            var s = html2canvas(document.getElementById('mycanvas')).toDataURL();;
+            document.getElementById('myimg')).src = s;
+            alert('Button clicked!'); // Replace this with your desired functionality
+        }
+    </script>
+  
+</head>
+<body>
+
+    <div id='mycanvas'>
+        <p>Test Text 1234</p>
+    </div>
+
+  <button onclick="DoesSomething()">Generate Image</button>
+<img id='myimg'>
+</img>
+</body>
+</html>
