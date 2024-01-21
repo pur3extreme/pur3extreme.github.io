@@ -36,9 +36,11 @@
     <script src="html2canvas.js"></script>
     <script>
         function DoesSomething() {
-            var s = html2canvas(document.getElementById('mycanvas')).toDataURL();;
-            document.getElementById('myimg').src = s;
-            alert('Button clicked!'); // Replace this with your desired functionality
+            html2canvas(document.getElementById('mycanvas')).then(function(canvas) {
+    document.body.appendChild(canvas);
+});
+            //document.getElementById('myimg').src = s;
+           // alert('Button clicked!'); // Replace this with your desired functionality
         }
     </script>
   
@@ -50,7 +52,9 @@
     </div>
 
   <button onclick="DoesSomething()">Generate Image</button>
+    <br>
 <img id='myimg'>Not Generated (yet)
 </img>
+    <br>
 </body>
 </html>
