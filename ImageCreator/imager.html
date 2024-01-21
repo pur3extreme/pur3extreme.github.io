@@ -37,7 +37,7 @@
     <script>
         function DoesSomething() {
             var s = html2canvas(document.getElementById('mycanvas')).toDataURL();;
-            document.getElementById('myimg')).src = s;
+            document.getElementById('myimg').src = s;
             alert('Button clicked!'); // Replace this with your desired functionality
         }
     </script>
@@ -50,7 +50,7 @@
     </div>
 
   <button onclick="DoesSomething()">Generate Image</button>
-<img id='myimg'>
+<img id='myimg'>Not Generated (yet)
 </img>
 </body>
 </html>
