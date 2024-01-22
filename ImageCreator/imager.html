@@ -7,13 +7,13 @@
     <style>
         @font-face {
             font-family: 'Courgette';
-            src: url('Courgette-Regular.ttf') format('ttf'); /* Replace 'custom-font.woff' with your actual font file */
+            src: url('Courgette-Regular.ttf') format('ttf');
             font-weight: normal;
             font-style: normal;
         }
 
         body {
-            font-family: 'CustomFont', sans-serif; /* Set the default font for the entire page */
+            font-family:  sans-serif;
         }
       
         div {
@@ -30,18 +30,25 @@
           font-family: 'Courgette', sans-serif;      
           font-size: 42px;
           color: #FF5500;
-          text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+          text-shadow: -2px -2px 3px #000, 2px -2px 3px #000, -2px 2px 3px #000, 2px 2px 3px #000;
         }
+		
+	#bottom {
+		width: 480px;
+        text-align: center;
+		position: absolute;
+		top: 180px;
+        color: #FFFF00;
+        text-shadow: -2px -2px 1px #000, 2px -2px 1px #000, -2px 2px 1px #000, 2px 2px 1px #000;
+		}
     </style>
 
     <script src="html2canvas.js"></script>
     <script>
         function DoesSomething() {
             html2canvas(document.getElementById('mycanvas')).then(function(canvas) {
-    document.body.appendChild(canvas);
+				document.body.replaceChild(canvas, document.body.lastChild);
 });
-            //document.getElementById('myimg').src = s;
-           // alert('Button clicked!'); // Replace this with your desired functionality
         }
     </script>
   
@@ -50,10 +57,32 @@
 
     <div id='mycanvas'>
         <p id='center'>Season 19 Tournament</p>
+		<p id='bottom'>Alien World 10s Random Spells</p>
     </div>
-
+<br>
+<label for="lname">Main Text:</label>
+<input type="text" id="lname" name="lname" size="52" value="Season 19 Tournament"><br><br>
+<label for="rname">Sub Text :</label>
+<input type="text" id="rname" name="rname" size="52"  value="Alien World 10s Random Spells"><br><br>
   <button onclick="DoesSomething()">Generate Image</button>
     <br>
     <br>
+	<canvas></canvas>
+	<script>
+	const source = document.getElementById('lname');
+	const result = document.getElementById('center');
+	const source2 = document.getElementById('rname');
+	const result2 = document.getElementById('bottom');
+
+	const inputHandler = function(e) {
+		result.innerText = e.target.value;
+	}
+	const inputHandler2 = function(e) {
+		result2.innerText = e.target.value;
+	}
+
+	source.addEventListener('input', inputHandler);
+	source2.addEventListener('input', inputHandler2);
+	</script>
 </body>
 </html>
