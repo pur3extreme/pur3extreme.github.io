@@ -8,11 +8,13 @@ class ContainerIndicator
 	double radius;
 	double angle;
 	string color;
+	LuaColor color2; //Same as color except a LuaColor instead of a hexcode
 	bool isDead => get;
 	IndicatorKind kind => get;
 
 	//Functions
 	void Destroy();
+	void setIcon(object spellObj) //type of SpellIcon
 }
 </code></pre>
 <h3>Example</h3>
