@@ -44,6 +44,7 @@ class ContainerCreature
 	void HighJump(int dir)
 	void Walk(int dir)
 	void setDirection(int dir)
+	int getDirection() //-1 = left, 1 = right
 	
 	bool inside(ContainerIndicator a)
         bool inside(Point a, double radius)
@@ -65,6 +66,8 @@ class ContainerCreature
 	int castedDamage(SpellEnum spellID)
 	int getMinionCount()
 	int getHashCode()
+	float angleToFire(object spellObj, Point target, float power = 1)
+	float powerToFire(object spellObj, Point target, float angle = 45) //WARNING does not currently work correctly
 	void castSpell(object spellObj, Point target, double angle, double power = 1) //spellObj = One of: Spell Name/SpellEnum/Other Spell/index
 	void fireAt(object spellObj, ContainerCreature target, double anglevariance = 0) //spellObj = One of: Spell Name/SpellEnum/Other Spell/index
 	void fireAt(object spellObj, Point target, double anglevariance = 0) //spellObj = One of: Spell Name/SpellEnum/Other Spell/index
