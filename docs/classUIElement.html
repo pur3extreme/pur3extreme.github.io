@@ -12,17 +12,21 @@
 	double pivot_x; //Default = 0.5;
 	double pivot_y; //Default = 0.5;
 	double angle; //Default = 0;
-	string onClick; //Default = null;
+	string onClick; //Default = null; -> The name of a function
+	function onClick2 //Default = null; -> A direct reference to a lua function - Takes priority over onClick
 	object clickID; //Default = null;
 	bool clickDestroy; //Default = true;
 	string color; //Default = "#7B7B7B";
+	LuaColor color2; //Same as color except a LuaColor instead of a hexcode ex: color(255,255,255,255)
 	string text; //Default = null;
 	string textColor; //Default = "#FFFFFF";
+	LuaColor textColor2; //Same as textColor except a LuaColor instead of a hexcode
 	AlignHorizontal textAlignment; //Default = AlignHorizontal.Center;
 	AlignVertical textVertical; //Default = AlignVertical.Middle;
 	int textStyle; //Default = 0; //FontStyles
 	double textSize; //Default = 24;
 	bool isDead => get;
+	UIElement parent => get;
 
 	//Functions
 	//Alias = "createUI()"
