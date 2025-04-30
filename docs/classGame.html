@@ -76,7 +76,7 @@ class ContainerGame
     void drawEllipse(int x, int y, int radiusX, int radiusY, LuaColor c)
     void blit(ExplosionCutout ex, Point point, bool ignoreAlpha = false, bool apply = true) //ignoreAlpha for things like Forest Seed - Don't for explosion cutouts - auto apply if true
     void blitRotate(ExplosionCutout ex, Point point, double rotation = 0, bool inFront = true, bool apply = true) //Not useable for explosion cutouts
-    void drawImage(string file, int x, int y, bool apply = false) //Persistant data path TutorialAssets/
+    void drawImage(string file, int x, int y, bool apply = false) //Will first check the directory the file was loaded from (note* sub folders are not supported) > then the Persistant data path TutorialAssets/ > Tutorials/ > CustomMaps/ > and lastly your downloads folder
     void applyDraw() //Always call this to update the visual map after all draw functions are complete    
 }
 </code></pre>
