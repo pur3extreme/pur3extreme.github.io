@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arcanists · Rankings</title>
+  <script>
+    // ADD SEASONS HERE. Paths are relative to this HTML file; last entry is the default.
+    const SEASONS = [
+      { name: 'Pre-Season Patch', file: 'Season 0.json' },
+      { name: 'Season 1', file: 'Season 1.json' },
+      // { name: 'Season 2', file: 'Season 2.json' },
+    ];
+    // Temporarily hidden statistics. Set to true to restore their nonzero-only columns.
+    const SHOW_EXTRA_STATS = false;
+  </script>
+  <meta name="description" content="Arcanists season rankings across all rated ladders.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23990010'/%3E%3Cpath d='M6 9l5 5 5-9 5 9 5-5-3 16H9z' fill='%23ffd65a'/%3E%3C/svg%3E">
+  <style>
+    :root { color-scheme: dark; font-family: Georgia, 'Times New Roman', serif; background: #10091f; color: #ffebbe; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: radial-gradient(ellipse at top, #28133f, transparent 75%), #10091f; isolation: isolate; }
+    .magic-sky { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; }
+    .magic-sky::before, .magic-sky::after { content: ''; position: absolute; inset: -30%; background: radial-gradient(ellipse at 25% 35%, #8844c83b, transparent 38%), radial-gradient(ellipse at 70% 60%, #6134b84d, transparent 35%), radial-gradient(ellipse at 45% 80%, #c054b522, transparent 32%); filter: blur(35px); animation: haze-drift 48s ease-in-out infinite alternate; }
+    .magic-sky::after { animation-duration: 67s; animation-delay: -31s; animation-direction: alternate-reverse; opacity: .65; }
+    .magic-star { position: absolute; width: var(--size); height: var(--size); border-radius: 50%; background: #f6e5ff; box-shadow: 0 0 6px #e1aaff, 0 0 13px #b566ee; animation: star-twinkle var(--duration) ease-in-out infinite; animation-delay: var(--delay); }
+    .magic-star.sparkle::before, .magic-star.sparkle::after { content: ''; position: absolute; inset: -4px 40%; background: linear-gradient(transparent, #f6e5ff, transparent); }
+    .magic-star.sparkle::after { transform: rotate(90deg); }
+    @keyframes haze-drift { from { transform: translate(-5%, -4%) rotate(-12deg) scale(1); } to { transform: translate(8%, 7%) rotate(18deg) scale(1.12); } }
+    @keyframes star-twinkle { 0%, 100% { opacity: .15; transform: scale(.7); } 50% { opacity: .85; transform: scale(1.15); } }
+    @media (prefers-reduced-motion: reduce) { .magic-sky::before, .magic-sky::after, .magic-star { animation: none; } .magic-star { opacity: .5; } }
+    main { max-width: 1200px; height: 100dvh; margin: 0 auto; padding: 10px 22px 0; display: flex; flex-direction: column; }
+    main > header, main > nav, main > .summary { flex-shrink: 0; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 25px 0; border-top: 2px solid #d9bd72; }
+    .eyebrow { font: 12px system-ui, sans-serif; letter-spacing: .3em; color: #d2bf88; }
+    h1 { margin: 8px 0 0; color: #ffe258; font-size: clamp(24px, 4vw, 38px); font-variant: small-caps; letter-spacing: .08em; text-shadow: 2px 3px #15150d; }
+    label { display: grid; gap: 7px; font: 12px system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; }
+    select { min-width: 160px; padding: 11px 36px 11px 14px; border: 1px solid #bfa36b; border-radius: 5px; background: #272c20; color: #ffebbe; font: 16px Georgia, serif; }
+    .season-picker { position: relative; min-width: 160px; }
+    .season-label { display: block; margin-bottom: 7px; font: 12px system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; }
+    #season-trigger { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 11px 14px; border: 1px solid #bfa36b; border-radius: 5px; background: #272c20; color: #ffebbe; font: 16px Georgia, serif; box-shadow: none; }
+    #season-menu { position: absolute; top: calc(100% + 7px); right: 0; min-width: 100%; width: max-content; max-width: min(300px, 85vw); max-height: min(280px, 45dvh); overflow-y: auto; z-index: 20; padding: 5px; border: 1px solid #a58ab066; border-radius: 9px; background: #20142f; box-shadow: 0 12px 30px #0009; }
+    .season-option { padding: 10px 12px; border-radius: 5px; cursor: pointer; color: #dfd0ea; font: 15px Georgia, serif; display: flex; justify-content: space-between; gap: 25px; }
+    .season-option[aria-selected="true"] { color: #ffe5a5; background: #39244c; }
+    .season-option:hover, .season-option:focus { background: #49315f; outline: none; }
+    .season-option::after { content: '✓'; visibility: hidden; }
+    .season-option[aria-selected="true"]::after { visibility: visible; }
+    @media(max-width: 600px) { .season-picker { width: 100%; } }
+    nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 18px 0; border-top: 1px solid #bfa36b66; border-bottom: 2px solid #d9bd72; }
+    button { cursor: pointer; flex: 0 0 160px; border: 2px solid #090b08; border-radius: 9px; padding: 11px 13px; background: #333d2c; color: #eee4c8; font: bold 15px Georgia, serif; box-shadow: 0 2px #090b08; }
+    button[hidden] { display: none; }
+    button:hover { filter: brightness(1.2); }
+    button[aria-pressed="true"] { background: var(--accent); color: #11180f; box-shadow: 0 0 0 1px #ffe5a5, 0 3px #090b08; }
+    :focus-visible { outline: 3px solid #fff1b9; outline-offset: 4px; }
+    .summary { display: flex; justify-content: space-between; align-items: center; gap: 15px; padding: 19px 0 13px; }
+    h2 { margin: 0; font-size: 18px; font-weight: normal; }
+    #count { color: #bdbba7; font: 13px system-ui, sans-serif; }
+    .table-wrap { flex: 1; min-height: 0; max-width: 100%; overflow: auto; border: 2px solid #090b08; border-radius: 10px 10px 0 0; background: #ffdfc4; isolation: isolate; scrollbar-color: #bfa36b #272c20; }
+    .table-wrap::-webkit-scrollbar { width: 14px; height: 14px; }
+    .table-wrap::-webkit-scrollbar-track { background: #272c20; }
+    .table-wrap::-webkit-scrollbar-thumb { background: #bfa36b; border: 3px solid #272c20; border-radius: 7px; }
+    table { width: 100%; border-collapse: collapse; text-align: center; color: #19150e; font: 15px ui-monospace, Consolas, monospace; font-variant-numeric: tabular-nums; }
+    th { position: sticky; top: 0; z-index: 2; padding: 13px 16px; background: var(--ladder-color, #46e54d); color: #11180f; font: bold 17px Georgia, serif; border-bottom: 3px solid #130c07; }
+    th button { padding: 0; border: 0; border-radius: 0; background: transparent; color: inherit; font: inherit; box-shadow: none; white-space: nowrap; }
+    .sort-arrow { display: inline-block; width: 1em; margin-left: 5px; color: #000; }
+    td { padding: 10px 16px; border-bottom: 1px solid #c8614e; }
+    td + td, th + th { border-left: 2px solid #2a2018; }
+    tbody tr:nth-child(even) { background: #f4d0ac; }
+    tbody tr:hover { background: #ffb96c; }
+    td:first-child { font-weight: bold; width: 75px; }
+    th:first-child, td:first-child:not(.message) { position: sticky; left: 0; z-index: 1; box-shadow: 2px 0 #2a2018; }
+    th:first-child { z-index: 3; }
+    td:first-child:not(.message) { background: #ffdfc4; }
+    tbody tr:nth-child(even) td:first-child:not(.message) { background: #f4d0ac; }
+    tbody tr:hover td:first-child:not(.message) { background: #ffb96c; }
+    td:not(.message) { white-space: nowrap; }
+    td:nth-child(2), th:nth-child(2) { text-align: left; min-width: 200px; }
+    tbody tr:last-child td { border-bottom: 0; }
+    .message { padding: 30px; text-align: center !important; white-space: normal; line-height: 1.6; }
+    footer { padding: 17px 12px; color: #19150e; font: 12px/1.6 system-ui, sans-serif; }
+    @media(max-width: 600px) { main { padding: 8px 12px 0; } header { align-items: start; flex-direction: column; gap: 10px; padding: 12px 0; } label, select { width: 100%; } button { flex-basis: 130px; } th, td { padding: 10px; } nav { padding: 10px 0; } }
+    @media(max-height: 600px) { header { padding: 6px 0; gap: 8px; flex-direction: row; } h1 { font-size: 24px; } .eyebrow { display: none; } nav { padding: 6px 0; gap: 6px; } nav button { padding: 5px 8px; } .summary { padding: 8px 0; } }
+  </style>
+</head>
+<body>
+  <div class="magic-sky" aria-hidden="true"></div>
+  <main>
+    <header>
+      <div><div class="eyebrow">ARCANISTS · HALL OF FAME</div><h1>Season Rankings</h1></div>
+      <div class="season-picker">
+        <span class="season-label" id="season-label">Choose season</span>
+        <select id="season" hidden aria-label="Choose season"></select>
+        <button id="season-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="season-menu" aria-labelledby="season-label season-current"><span id="season-current"></span><span aria-hidden="true">▾</span></button>
+        <div id="season-menu" role="listbox" aria-labelledby="season-label" hidden></div>
+      </div>
+    </header>
+    <nav id="ladders" aria-label="Ranking ladders"></nav>
+    <div class="summary"><h2 id="heading">High Time Ladder</h2><span id="count" role="status" aria-live="polite"></span></div>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Rankings table, scroll horizontally on smaller screens">
+      <table aria-labelledby="heading">
+        <thead><tr><th scope="col">Rank</th><th scope="col">Name</th><th scope="col">Rating</th><th scope="col">Played</th><th scope="col">Won</th><th scope="col">Drawn</th><th scope="col">Lost</th><th scope="col" hidden>First Turn</th><th scope="col" hidden>First Turn Wins</th><th scope="col" hidden>Kills</th><th scope="col" hidden>Survived</th><th scope="col" hidden>Team Games</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    <footer>Click a column heading to sort; click again to reverse. Rank always reflects rating order. Won, drawn, lost and First Turn are percentages of games played. First Turn Wins is the percentage of first-turn games won; — means no first-turn games. Only players and ladders with games played are shown.</footer>
+    </div>
+  </main>
+  <script>
+    const sky = document.querySelector('.magic-sky');
+    const stars = document.createDocumentFragment();
+    for (let i = 0; i < 75; i++) {
+      const star = document.createElement('span');
+      star.className = `magic-star${i % 7 === 0 ? ' sparkle' : ''}`;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.setProperty('--size', `${1 + Math.random() * 2}px`);
+      star.style.setProperty('--duration', `${4 + Math.random() * 7}s`);
+      star.style.setProperty('--delay', `${-Math.random() * 11}s`);
+      stars.append(star);
+    }
+    sky.append(stars);
+    const LADDERS = [
+      { key: 'high', label: 'High Time', prefix: 'gh', color: '#46e54d' },
+      { key: 'low', label: 'Low Time', prefix: 'gg', color: '#ff6268' },
+      { key: 'party', label: 'Party Mode', prefix: 'gi', color: '#32d3df' },
+      { key: 'teams', label: 'Teams', prefix: 'gm', color: '#eeb956' },
+      { key: 'ele', label: 'Elemental', prefix: 'gn', color: '#b99ae9' },
+      { key: 'rnd', label: 'Random Spells', prefix: 'gk', color: '#7db8ee' },
+      { key: 'casino', label: 'SINO', prefix: 'gj', color: '#f29dcc' },
+    ];
+    const seasonSelect = document.querySelector('#season');
+    const rows = document.querySelector('#rows');
+    const count = document.querySelector('#count');
+    let data = null;
+    let selected = 'high';
+    let requestId = 0;
+    let sortColumn = 2;
+    let sortDirection = -1;
+    const sortHeaders = [...document.querySelectorAll('thead th')];
+    sortHeaders.forEach((header, column) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.append(document.createTextNode(header.textContent));
+      const arrow = document.createElement('span');
+      arrow.className = 'sort-arrow';
+      arrow.setAttribute('aria-hidden', 'true');
+      button.append(arrow);
+      header.replaceChildren(button);
+      button.addEventListener('click', () => {
+        sortDirection = sortColumn === column ? -sortDirection : (column <= 1 ? 1 : -1);
+        sortColumn = column;
+        render();
+      });
+    });
+    // In-memory only: reloading the page starts a fresh cache.
+    const cache = new Map();
+    function activePlayers(ladder) {
+      return (data?.[ladder.key] || []).filter(player => Number(player[`${ladder.prefix}3`]) > 0);
+    }
+    function showMessage(message) {
+      const cell = document.createElement('td');
+      cell.colSpan = sortHeaders.filter(header => !header.hidden).length;
+      cell.className = 'message';
+      cell.textContent = message;
+      const row = document.createElement('tr');
+      row.append(cell);
+      rows.replaceChildren(row);
+    }
+    function render() {
+      const available = data ? LADDERS.filter(ladder => activePlayers(ladder).length > 0) : [];
+      if (data && !available.some(ladder => ladder.key === selected)) selected = available[0]?.key || 'high';
+      document.querySelectorAll('nav button').forEach(button => {
+        button.hidden = !available.some(ladder => ladder.key === button.dataset.key);
+      });
+      const ladder = LADDERS.find(item => item.key === selected);
+      const players = activePlayers(ladder).sort((a, b) => b[`rate${ladder.key}`] - a[`rate${ladder.key}`]);
+      sortHeaders[7].hidden = !SHOW_EXTRA_STATS || !players.some(player => Number(player[`${ladder.prefix}9`]) > 0);
+      sortHeaders[8].hidden = !SHOW_EXTRA_STATS || !players.some(player => Number(player[`${ladder.prefix}10`]) > 0);
+      sortHeaders[9].hidden = !players.some(player => Number(player[`${ladder.prefix}8`]) > 0);
+      sortHeaders[10].hidden = !SHOW_EXTRA_STATS || !players.some(player => Number(player[`${ladder.prefix}7`]) > 0);
+      sortHeaders[11].hidden = !SHOW_EXTRA_STATS || !players.some(player => Number(player[`${ladder.prefix}13`]) > 0);
+      // Preserve the selected sort during loading; reset if the new ladder lacks that column.
+      if (data && sortHeaders[sortColumn].hidden) { sortColumn = 2; sortDirection = -1; }
+      sortHeaders.forEach((header, column) => {
+        const active = column === sortColumn;
+        header.setAttribute('aria-sort', active ? (sortDirection === 1 ? 'ascending' : 'descending') : 'none');
+        header.querySelector('.sort-arrow').textContent = active ? (sortDirection === 1 ? '▲' : '▼') : '';
+      });
+      document.documentElement.style.setProperty('--ladder-color', ladder.color);
+      document.querySelector('#heading').textContent = `${ladder.label} Ladder`;
+      document.querySelectorAll('nav button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.key === selected)));
+      if (!data) return;
+      count.textContent = `${players.length.toLocaleString()} players · ${SEASONS[seasonSelect.value].name}`;
+      if (!players.length) {
+        document.querySelector('#heading').textContent = 'Season Rankings';
+        showMessage('No games played in this season.');
+        return;
+      }
+      const fragment = document.createDocumentFragment();
+      const entries = players.map((player, index) => {
+        const played = Number(player[`${ladder.prefix}3`]) || 0;
+        const won = Number(player[`${ladder.prefix}2`]) || 0;
+        const drawn = Number(player[`${ladder.prefix}11`]) || 0;
+        const lost = Math.max(0, played - won - drawn);
+        const firstTurn = Number(player[`${ladder.prefix}9`]) || 0;
+        const firstTurnWins = Number(player[`${ladder.prefix}10`]) || 0;
+        const kills = Number(player[`${ladder.prefix}8`]) || 0;
+        const survived = Number(player[`${ladder.prefix}7`]) || 0;
+        const teamGames = Number(player[`${ladder.prefix}13`]) || 0;
+        const percent = value => played ? `${(value / played * 100).toFixed(2)}%` : '—';
+        return {
+          values: [index + 1, String(player.name ?? ''), Number(player[`rate${ladder.key}`]) || 0, played, won / played, drawn / played, lost / played, firstTurn / played, firstTurn ? firstTurnWins / firstTurn : null, kills, survived, teamGames],
+          display: [index + 1, player.name, player[`rate${ladder.key}`] ?? 0, played, percent(won), percent(drawn), percent(lost), percent(firstTurn), firstTurn ? `${(firstTurnWins / firstTurn * 100).toFixed(2)}%` : '—', kills, survived, teamGames],
+          totals: [won, drawn, lost],
+        };
+      });
+      entries.sort((a, b) => {
+        // Undefined percentages stay at the bottom in either sort direction.
+        if (a.values[sortColumn] === null || b.values[sortColumn] === null) {
+          return (a.values[sortColumn] === null) - (b.values[sortColumn] === null) || a.values[0] - b.values[0];
+        }
+        const comparison = sortColumn === 1
+          ? a.values[1].localeCompare(b.values[1], undefined, { sensitivity: 'base' })
+          : a.values[sortColumn] - b.values[sortColumn];
+        return comparison * sortDirection || a.values[0] - b.values[0];
+      });
+      entries.forEach(entry => {
+        const row = document.createElement('tr');
+        entry.display.forEach((value, column) => {
+          if (sortHeaders[column].hidden) return;
+          const cell = document.createElement('td');
+          cell.textContent = String(value ?? '');
+          if (column >= 4 && column <= 6) cell.title = `${entry.totals[column - 4]} games`;
+          row.append(cell);
+        });
+        fragment.append(row);
+      });
+      rows.replaceChildren(fragment);
+    }
+    async function loadSeason() {
+      const id = ++requestId;
+      const season = SEASONS[seasonSelect.value];
+      data = null;
+      render();
+      count.textContent = 'Loading…';
+      showMessage('Loading rankings…');
+      try {
+        if (!cache.has(season.file)) {
+          const response = await fetch(season.file, { cache: 'no-store' });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const json = await response.json();
+          if (!json || typeof json !== 'object' || !LADDERS.some(l => Array.isArray(json[l.key]))) throw new Error('Unrecognized season format');
+          for (const ladder of LADDERS) {
+            if (json[ladder.key] !== undefined && (!Array.isArray(json[ladder.key]) || json[ladder.key].some(p => !p || typeof p !== 'object'))) throw new Error('Invalid ladder data');
+          }
+          cache.set(season.file, json);
+        }
+        if (id !== requestId) return;
+        data = cache.get(season.file);
+        render();
+      } catch (error) {
+        if (id !== requestId) return;
+        count.textContent = 'Unable to load season';
+        showMessage(location.protocol === 'file:'
+          ? 'Serve this folder over HTTP to load the JSON files. From the Seasons folder, run: python -m http.server 8000 — then open http://localhost:8000.'
+          : `Could not load ${season.file}: ${error.message}. Check the file and reload the page.`);
+      }
+    }
+    SEASONS.forEach((season, index) => seasonSelect.add(new Option(season.name, index)));
+    if (SEASONS.length) seasonSelect.value = String(SEASONS.length - 1);
+    const seasonTrigger = document.querySelector('#season-trigger');
+    const seasonMenu = document.querySelector('#season-menu');
+    const seasonCurrent = document.querySelector('#season-current');
+    const seasonOptions = SEASONS.map((season, index) => {
+      const option = document.createElement('div');
+      option.className = 'season-option';
+      option.setAttribute('role', 'option');
+      option.tabIndex = -1;
+      option.textContent = season.name;
+      option.addEventListener('click', () => chooseSeason(index));
+      option.addEventListener('keydown', event => {
+        let next = index;
+        if (event.key === 'ArrowDown') next = (index + 1) % SEASONS.length;
+        else if (event.key === 'ArrowUp') next = (index - 1 + SEASONS.length) % SEASONS.length;
+        else if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = SEASONS.length - 1;
+        else if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); chooseSeason(index); return; }
+        else if (event.key === 'Escape') { event.preventDefault(); closeSeasonMenu(true); return; }
+        else if (event.key === 'Tab') { closeSeasonMenu(true); return; }
+        else return;
+        event.preventDefault();
+        seasonOptions[next].focus();
+      });
+      seasonMenu.append(option);
+      return option;
+    });
+    function updateSeasonPicker() {
+      seasonCurrent.textContent = SEASONS[seasonSelect.value]?.name || 'No seasons';
+      seasonTrigger.disabled = !SEASONS.length;
+      seasonOptions.forEach((option, index) => option.setAttribute('aria-selected', String(index === Number(seasonSelect.value))));
+    }
+    function closeSeasonMenu(focus = false) {
+      seasonMenu.hidden = true;
+      seasonTrigger.setAttribute('aria-expanded', 'false');
+      if (focus) seasonTrigger.focus();
+    }
+    function openSeasonMenu() {
+      if (!SEASONS.length) return;
+      seasonMenu.hidden = false;
+      seasonTrigger.setAttribute('aria-expanded', 'true');
+      seasonOptions[Number(seasonSelect.value)].focus();
+    }
+    function chooseSeason(index) {
+      const changed = Number(seasonSelect.value) !== index;
+      seasonSelect.value = String(index);
+      updateSeasonPicker();
+      closeSeasonMenu(true);
+      if (changed) loadSeason();
+    }
+    seasonTrigger.addEventListener('click', () => seasonMenu.hidden ? openSeasonMenu() : closeSeasonMenu());
+    seasonTrigger.addEventListener('keydown', event => {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); openSeasonMenu(); }
+    });
+    document.addEventListener('pointerdown', event => {
+      if (!event.target.closest('.season-picker')) closeSeasonMenu();
+    });
+    document.addEventListener('focusin', event => {
+      if (!event.target.closest('.season-picker')) closeSeasonMenu();
+    });
+    updateSeasonPicker();
+    LADDERS.forEach(ladder => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.dataset.key = ladder.key;
+      button.style.setProperty('--accent', ladder.color);
+      button.textContent = `${ladder.label} Ladder`;
+      button.addEventListener('click', () => { selected = ladder.key; render(); });
+      document.querySelector('#ladders').append(button);
+    });
+    seasonSelect.addEventListener('change', loadSeason);
+    render();
+    if (SEASONS.length) loadSeason();
+    else showMessage('Add a season to the SEASONS list near the top of this file.');
+  </script>
+</body>
+</html>
